@@ -3,21 +3,41 @@ package neurosky.com.smartdesk.manager;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.UUID;
+
+import neurosky.com.smartdesk.service.BluetoothService;
 
 /**
  * Created by MoonJongRak on 2016. 7. 21..
  */
 public class ConnectManager {
+    public static final String CMD_DESK_UP = "SM1U";
+    public static final String CMD_DESK_DOWN = "SM1D";
+    public static final String CMD_LED_UP = "SM2U";
+    public static final String CMD_LED_DOWN = "SM2D";
+    public static final String CMD_CENTER_TABLE_UP = "SM3U";
+    public static final String CMD_CENTER_TABLE_DOWN = "SM3D";
+    public static final String CMD_MAIN_TABLE_UP = "SM4U";
+    public static final String CMD_MAIN_TABLE_DOWN = "SM4D";
+
+    private static final String CMD_READ_STATUS = "RDATA";
+    //STX,R,000,000,00000,ETX
+
+
     private static final String TAG = ConnectManager.class.getSimpleName();
     private static final String SF_CONNECT_MANAGER = "ConnectManager";
     private static final String FLAG_ADDRESS = "address";
@@ -34,6 +54,8 @@ public class ConnectManager {
     private BluetoothDevice bluetoothDevice;
     private BluetoothSocket bluetoothSocket;
 
+    private BroadcastReceiver broadcastReceiver;
+
     final char STX = 0x02;
     final char ETX = 0x03;
     final char LF = 0x0A;
@@ -48,6 +70,7 @@ public class ConnectManager {
     private ConnectManager(Context context) {
         this.context = context;
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        broadcastReceiver = new ConnectReceiver();
     }
 
     public void setConnectDevice() {
@@ -85,7 +108,14 @@ public class ConnectManager {
         if (receiveTask != null) {
             receiveTask.cancel(false);
         }
-        close();
+
+        if (bluetoothSocket != null) {
+            try {
+                bluetoothSocket.close();
+            } catch (IOException ignored) {
+            }
+            bluetoothSocket = null;
+        }
         new ConnectTask().execute();
         Log.d(TAG, "블루투스 기기와 연결중...");
     }
@@ -98,14 +128,14 @@ public class ConnectManager {
                 e.printStackTrace();
             }
         }
+        bluetoothSocket = null;
+        if (listener != null) {
+            listener.onDisconnected();
+        }
     }
 
     public boolean isConnected() {
-        if (bluetoothSocket == null) {
-            throw new IllegalStateException("블루투스 기기를 먼저 연결해 주세요.(Connect())");
-        }
-
-        return bluetoothSocket.isConnected();
+        return bluetoothSocket != null && bluetoothSocket.isConnected();
     }
 
     public boolean isBluetoothEnable() {
@@ -121,10 +151,30 @@ public class ConnectManager {
     }
 
     public void sendData(String... data) {
-        if (bluetoothSocket == null) {
-            throw new IllegalStateException("블루투스 기기를 먼저 연결해 주세요.(Connect())");
+        if (bluetoothSocket == null && listener != null) {
+            listener.onError(new IllegalStateException("블루투스 기기를 먼저 연결해 주세요.(Connect())"));
+            return;
         }
         new SendDataTask().execute(data);
+    }
+
+    public void onCreate() {
+        regReceiver();
+    }
+
+    public void onDestroy() {
+        unRegReceiver();
+    }
+
+    private void regReceiver() {
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
+        filter.addAction(BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED);
+        context.registerReceiver(broadcastReceiver, filter);
+    }
+
+    private void unRegReceiver() {
+        context.unregisterReceiver(broadcastReceiver);
     }
 
     private class ConnectTask extends AsyncTask<Void, Void, Boolean> {
@@ -153,6 +203,9 @@ public class ConnectManager {
                 receiveTask = new ReceiveDataTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 Log.d(TAG, "블루투스 기기와 연결 완료...");
             } else {
+                if (listener != null) {
+                    listener.onDisconnected();
+                }
                 Log.d(TAG, "블루투스 기기와 연결 실패...");
             }
         }
@@ -179,6 +232,7 @@ public class ConnectManager {
                 if (listener != null) {
                     listener.onError(e);
                 }
+                close();
                 Log.d(TAG, "블루투스 기기로 데이터 전송중 오류...");
             }
             return null;
@@ -210,6 +264,7 @@ public class ConnectManager {
                 if (listener != null) {
                     listener.onError(e);
                 }
+                close();
                 Log.d(TAG, "블루투스 기기로부터 데이터 받기 에러..");
             }
             return null;
@@ -227,6 +282,8 @@ public class ConnectManager {
         void onReceive(String data);
 
         void onError(Exception e);
+
+        void onDisconnected();
     }
 
     public class NotSavedDeviceException extends IllegalStateException {
@@ -238,4 +295,40 @@ public class ConnectManager {
             super(err);
         }
     }
+
+
+    public static String getCmdChangeLed(byte red, byte green, byte blue, byte white, byte c) {
+        //STX,W,r000,g000,b000,w000,c000,ETX
+        return "Wr" + red + "g" + green + "b" + blue + "w" + white + "c" + c;
+    }
+
+    public static Bundle getParseStatus(String data) {
+        try {
+            int start = data.indexOf("R");
+            String tmp = data.substring(start + 1, start + 12);
+            Bundle result = new Bundle();
+
+            result.putString(BluetoothService.FLAG_TEMPERATURE, Float.toString(Float.parseFloat(tmp.substring(0, 3)) / 10));
+            result.putString(BluetoothService.FLAG_HUMIDITY, Float.toString(Float.parseFloat(tmp.substring(3, 6)) / 10));
+            result.putString(BluetoothService.FLAG_LIGHT, Integer.toString(Integer.parseInt(tmp.substring(6, 11))));
+            return result;
+        } catch (NumberFormatException | IndexOutOfBoundsException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private class ConnectReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(BluetoothDevice.ACTION_ACL_DISCONNECT_REQUESTED) || intent.getAction().equals(BluetoothDevice.ACTION_ACL_DISCONNECTED)) {
+                BluetoothDevice bluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                if (bluetoothDevice.equals(getConnectDevice())) {
+                    close();
+                }
+            }
+        }
+    }
+
+
 }
