@@ -25,9 +25,9 @@ import neurosky.com.smartdesk.manager.LongPressListener;
 import neurosky.com.smartdesk.service.BluetoothService;
 
 public class MainActivity extends SmartDeskActivity implements View.OnClickListener {
-
-    private TextView textViewReceive;
-    private TextView textViewStatus;
+    //
+//    private TextView textViewReceive;
+//    private TextView textViewStatus;
     private CircularProgressButton buttonConnect;
     private ImageView buttonSetting;
 
@@ -36,7 +36,7 @@ public class MainActivity extends SmartDeskActivity implements View.OnClickListe
     private ServiceConnection connection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
             messenger = new Messenger(service);
-            textViewReceive.setEnabled(true);
+            //  textViewReceive.setEnabled(true);
         }
 
         public void onServiceDisconnected(ComponentName className) {
@@ -48,11 +48,11 @@ public class MainActivity extends SmartDeskActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        textViewReceive = (TextView) findViewById(R.id.tv_receive);
-        textViewReceive.setEnabled(false);
-        textViewStatus = (TextView) findViewById(R.id.tv_status);
-        buttonConnect = (CircularProgressButton)findViewById(R.id.bt_connect);
-        buttonSetting = (ImageView)findViewById(R.id.bt_setting);
+//        textViewReceive = (TextView) findViewById(R.id.tv_receive);
+//        textViewReceive.setEnabled(false);
+//        textViewStatus = (TextView) findViewById(R.id.tv_status);
+        buttonConnect = (CircularProgressButton) findViewById(R.id.bt_connect);
+        buttonSetting = (ImageView) findViewById(R.id.bt_setting);
 
         buttonConnect.setOnClickListener(this);
         buttonSetting.setOnClickListener(this);
@@ -92,7 +92,7 @@ public class MainActivity extends SmartDeskActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_connect:
-                textViewStatus.setText("연결중...");
+                //textViewStatus.setText("연결중...");
                 buttonConnect.setProgress(0);
                 buttonConnect.setIndeterminateProgressMode(true); // turn on indeterminate progress
                 buttonConnect.setProgress(50);
@@ -160,22 +160,22 @@ public class MainActivity extends SmartDeskActivity implements View.OnClickListe
                 String temp = intent.getStringExtra(BluetoothService.FLAG_TEMPERATURE);
                 String hum = intent.getStringExtra(BluetoothService.FLAG_HUMIDITY);
                 String light = intent.getStringExtra(BluetoothService.FLAG_LIGHT);
-                textViewReceive.append("온도:" + temp + ", 습도:" + hum + ", 빛:" + light + "\n");
+                // textViewReceive.append("온도:" + temp + ", 습도:" + hum + ", 빛:" + light + "\n");
             } else if (intent.getAction().equals(BluetoothService.ACTION_CONNECT_DEVICE)) {
                 buttonConnect.setProgress(100);
-                textViewStatus.setText("연결완료");
+                // textViewStatus.setText("연결완료");
             } else if (intent.getAction().equals(BluetoothService.ACTION_DISCONNECT_DEVICE)) {
                 buttonConnect.setProgress(0);
                 buttonConnect.setProgress(-1);
-                textViewStatus.setText("연결끊김");
+                //textViewStatus.setText("연결끊김");
             } else if (intent.getAction().equals(BluetoothService.ACTION_ERROR)) {
                 Exception e = (Exception) intent.getSerializableExtra(BluetoothService.FLAG_ERROR);
                 buttonConnect.setProgress(0);
                 buttonConnect.setProgress(-1);
                 if (e instanceof ConnectManager.BluetoothOffException) {
-                    textViewStatus.setText("연결안됨");
+                    // textViewStatus.setText("연결안됨");
                 } else {
-                    textViewStatus.setText("에러");
+                    // textViewStatus.setText("에러");
                 }
             }
         }

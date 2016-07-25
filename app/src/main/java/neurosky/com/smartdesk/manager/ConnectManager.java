@@ -330,7 +330,7 @@ public class ConnectManager {
         }
     }
 
-    public static String getCmdChangeLed(byte red, byte green, byte blue, byte white, byte c) {
+    public static String getCmdChangeLed(int red, int green, int blue, int white, int c) {
         //STX,W,r000,g000,b000,w000,c000,ETX
         return "Wr" + red + "g" + green + "b" + blue + "w" + white + "c" + c;
     }
