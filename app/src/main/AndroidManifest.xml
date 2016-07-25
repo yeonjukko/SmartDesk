@@ -11,13 +11,19 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.RegDeviceActivity"
+            android:label="Register Device" />
+
 
         <receiver
             android:name=".WidgetProvider"
@@ -38,7 +44,6 @@
             android:name=".service.BluetoothService"
             android:enabled="true"
             android:exported="true" />
-        <activity android:name=".activity.RegDeviceActivity" />
     </application>
 
 

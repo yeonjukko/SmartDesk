@@ -153,6 +153,7 @@ public class BluetoothService extends Service implements ConnectManager.OnBlueto
         try {
             if (!connectManager.isBluetoothEnable()) {
                 Toast.makeText(getContext(), "블루투스를 켜주세요.", Toast.LENGTH_SHORT).show();
+                sendError(new ConnectManager.BluetoothOffException());
                 return;
             }
             if (!connectManager.isConnected()) {
