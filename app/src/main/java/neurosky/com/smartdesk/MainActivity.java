@@ -13,8 +13,12 @@ import android.os.RemoteException;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.dd.CircularProgressButton;
+
+import neurosky.com.smartdesk.activity.RegDeviceActivity;
 import neurosky.com.smartdesk.activity.SmartDeskActivity;
 import neurosky.com.smartdesk.manager.ConnectManager;
 import neurosky.com.smartdesk.manager.LongPressListener;
@@ -24,6 +28,8 @@ public class MainActivity extends SmartDeskActivity implements View.OnClickListe
 
     private TextView textViewReceive;
     private TextView textViewStatus;
+    private CircularProgressButton buttonConnect;
+    private ImageView buttonSetting;
 
     private BroadcastReceiver receiver;
     private Messenger messenger;
@@ -45,8 +51,12 @@ public class MainActivity extends SmartDeskActivity implements View.OnClickListe
         textViewReceive = (TextView) findViewById(R.id.tv_receive);
         textViewReceive.setEnabled(false);
         textViewStatus = (TextView) findViewById(R.id.tv_status);
+        buttonConnect = (CircularProgressButton)findViewById(R.id.bt_connect);
+        buttonSetting = (ImageView)findViewById(R.id.bt_setting);
 
-        findViewById(R.id.bt_connect).setOnClickListener(this);
+        buttonConnect.setOnClickListener(this);
+        buttonSetting.setOnClickListener(this);
+
         findViewById(R.id.bt_1).setOnTouchListener(touchListener);
         findViewById(R.id.bt_2).setOnTouchListener(touchListener);
         findViewById(R.id.bt_3).setOnTouchListener(touchListener);
@@ -83,6 +93,9 @@ public class MainActivity extends SmartDeskActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.bt_connect:
                 textViewStatus.setText("연결중...");
+                buttonConnect.setProgress(0);
+                buttonConnect.setIndeterminateProgressMode(true); // turn on indeterminate progress
+                buttonConnect.setProgress(50);
                 Message msg = Message.obtain(null, BluetoothService.CONNECT_DEVICE, 0, 0);
                 try {
                     messenger.send(msg);
@@ -90,6 +103,11 @@ public class MainActivity extends SmartDeskActivity implements View.OnClickListe
                     e.printStackTrace();
                 }
                 break;
+            case R.id.bt_setting:
+                Intent intent = new Intent(getContext(), RegDeviceActivity.class);
+                startActivity(intent);
+                break;
+
         }
 
     }
@@ -100,10 +118,6 @@ public class MainActivity extends SmartDeskActivity implements View.OnClickListe
             Message msg = Message.obtain(null, BluetoothService.SEND_DATA, 0, 0);
             Bundle bundle = new Bundle();
             switch (view.getId()) {
-                case R.id.bt_connect:
-                    textViewStatus.setText("연결중...");
-                    msg = Message.obtain(null, BluetoothService.CONNECT_DEVICE, 0, 0);
-                    break;
                 case R.id.bt_1:
                     bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_DESK_UP);
                     break;
@@ -148,11 +162,16 @@ public class MainActivity extends SmartDeskActivity implements View.OnClickListe
                 String light = intent.getStringExtra(BluetoothService.FLAG_LIGHT);
                 textViewReceive.append("온도:" + temp + ", 습도:" + hum + ", 빛:" + light + "\n");
             } else if (intent.getAction().equals(BluetoothService.ACTION_CONNECT_DEVICE)) {
+                buttonConnect.setProgress(100);
                 textViewStatus.setText("연결완료");
             } else if (intent.getAction().equals(BluetoothService.ACTION_DISCONNECT_DEVICE)) {
+                buttonConnect.setProgress(0);
+                buttonConnect.setProgress(-1);
                 textViewStatus.setText("연결끊김");
             } else if (intent.getAction().equals(BluetoothService.ACTION_ERROR)) {
                 Exception e = (Exception) intent.getSerializableExtra(BluetoothService.FLAG_ERROR);
+                buttonConnect.setProgress(0);
+                buttonConnect.setProgress(-1);
                 if (e instanceof ConnectManager.BluetoothOffException) {
                     textViewStatus.setText("연결안됨");
                 } else {

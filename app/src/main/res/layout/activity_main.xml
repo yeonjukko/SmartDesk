@@ -1,36 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_main_color"
+    android:background="@drawable/bg_main_1"
     android:orientation="horizontal"
     tools:context="neurosky.com.smartdesk.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.1"
+        android:layout_weight="1"
         android:gravity="center_vertical"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/bt_connect"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="서비스 연결" />
-
-        <TextView
-            android:id="@+id/tv_status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="상태" />
-
-        <TextView
-            android:id="@+id/tv_receive"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
 
     </LinearLayout>
@@ -40,38 +24,69 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical">
-
-        <TextView
-            android:layout_marginTop="30dp"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Smart System Setting"
-            android:textSize="40dp" />
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="50dp"
+                android:gravity="center"
+                android:text="Smart System Setting"
+                android:textSize="40dp" />
+            <ImageView
+                android:id="@+id/bt_setting"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="80dp"
+                android:layout_gravity="right"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_setting"/>
+        </FrameLayout>
+
+
+
+        <com.dd.CircularProgressButton
+            android:id="@+id/bt_connect"
+            android:layout_width="196dp"
+            android:layout_height="64dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            app:cpb_cornerRadius="48dp"
+            app:cpb_textComplete="Connected!"
+            app:cpb_textError="Disconnected"
+            app:cpb_textIdle="Connection" />
 
 
         <LinearLayout
-            android:layout_marginTop="30dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="100dp"
+            android:layout_weight="1"
             android:gravity="center_vertical"
             android:orientation="horizontal">
+
             <TextView
-                android:layout_width="270dp"
-                android:textSize="30dp"
+                android:layout_width="370dp"
                 android:layout_height="wrap_content"
-                android:text="Desk Height"/>
+                android:text="Desk Height"
+                android:textSize="30dp" />
+
             <ImageView
                 android:id="@+id/bt_2"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/ic_minus"
                 android:text="CMD_DESK_DOWN" />
+
             <ImageView
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginRight="100dp"
                 android:src="@drawable/ic_table"
                 android:text="CMD_DESK_DOWN" />
 
@@ -83,35 +98,37 @@
                 android:text="CMD_DESK_UP" />
 
 
-
-
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginTop="30dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+
+            android:layout_height="match_parent"
+            android:layout_marginLeft="100dp"
+            android:layout_weight="1"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
 
             <TextView
-                android:layout_width="270dp"
-                android:textSize="30dp"
+                android:layout_width="370dp"
                 android:layout_height="wrap_content"
-                android:text="Smart LED Height"/>
+                android:text="Smart LED Height"
+                android:textSize="30dp" />
+
             <ImageView
                 android:id="@+id/bt_4"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/ic_minus"
                 android:text="CMD_LED_DOWN" />
+
             <ImageView
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:src="@drawable/ic_light"/>
+                android:layout_marginLeft="100dp"
+                android:layout_marginRight="100dp"
+                android:src="@drawable/ic_light" />
 
             <ImageView
                 android:id="@+id/bt_3"
@@ -122,28 +139,32 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginTop="30dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+
+            android:layout_height="match_parent"
+            android:layout_marginLeft="100dp"
+            android:layout_weight="1"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="270dp"
-                android:textSize="30dp"
+                android:layout_width="370dp"
                 android:layout_height="wrap_content"
-                android:text="Desk Slope"/>
+                android:text="Center Table Height"
+                android:textSize="30dp" />
+
             <ImageView
                 android:id="@+id/bt_6"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/ic_minus"/>
+                android:src="@drawable/ic_minus" />
+
             <ImageView
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:src="@drawable/ic_laptop"/>
+                android:layout_marginLeft="100dp"
+                android:layout_marginRight="100dp"
+                android:src="@drawable/ic_table" />
 
             <ImageView
                 android:id="@+id/bt_5"
@@ -153,39 +174,48 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginTop="30dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+
+            android:layout_height="match_parent"
+            android:layout_marginLeft="100dp"
+            android:layout_weight="1"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
 
             <TextView
-                android:layout_width="270dp"
-                android:textSize="30dp"
+                android:layout_width="370dp"
                 android:layout_height="wrap_content"
-                android:text="Main Desk Height"/>
+                android:text="Tablet Slope"
+                android:textSize="30dp" />
+
             <ImageView
                 android:id="@+id/bt_8"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/ic_minus"/>
+                android:src="@drawable/ic_minus" />
+
             <ImageView
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:src="@drawable/ic_table"/>
+                android:layout_marginLeft="100dp"
+                android:layout_marginRight="100dp"
+                android:src="@drawable/ic_laptop" />
 
             <ImageView
                 android:id="@+id/bt_7"
-
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/ic_plus" />
         </LinearLayout>
 
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:textSize="10dp" />
     </LinearLayout>
 
 
