@@ -49,6 +49,7 @@ public class ConnectManager {
     private Context context;
     private OnBluetoothListener listener;
     private AsyncTask receiveTask;
+    private AsyncTask requestTask;
 
     private BluetoothAdapter bluetoothAdapter;
     private BluetoothDevice bluetoothDevice;
@@ -106,7 +107,10 @@ public class ConnectManager {
         }
 
         if (receiveTask != null) {
-            receiveTask.cancel(false);
+            receiveTask.cancel(true);
+        }
+        if (requestTask != null) {
+            receiveTask.cancel(true);
         }
 
         if (bluetoothSocket != null) {
@@ -201,6 +205,7 @@ public class ConnectManager {
                     listener.onConnected();
                 }
                 receiveTask = new ReceiveDataTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                requestTask = new RequestStatusTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 Log.d(TAG, "블루투스 기기와 연결 완료...");
             } else {
                 if (listener != null) {
@@ -270,6 +275,25 @@ public class ConnectManager {
             return null;
         }
 
+    }
+
+    private class RequestStatusTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            while (true) {
+                sendData(CMD_READ_STATUS);
+                try {
+                    Thread.sleep(60000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if (isCancelled()) {
+                    break;
+                }
+            }
+            return null;
+        }
     }
 
     private String makeQuery(String data) {

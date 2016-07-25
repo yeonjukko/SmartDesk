@@ -84,6 +84,12 @@ public class BluetoothService extends Service implements ConnectManager.OnBlueto
         Log.d(TAG, "onDisconnected");
     }
 
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+
+        return super.onStartCommand(intent, flags, startId);
+    }
+
     private void sendDisconnected() {
         Intent intent = new Intent(ACTION_DISCONNECT_DEVICE);
         sendBroadcast(intent);
@@ -152,7 +158,7 @@ public class BluetoothService extends Service implements ConnectManager.OnBlueto
             if (!connectManager.isConnected()) {
                 connectManager.setConnectDevice();
                 connectManager.connect();
-            }else{
+            } else {
                 sendConnected();
             }
         } catch (ConnectManager.NotSavedDeviceException e) {

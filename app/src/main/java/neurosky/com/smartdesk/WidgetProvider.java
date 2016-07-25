@@ -1,10 +1,14 @@
 package neurosky.com.smartdesk;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
+import android.os.Messenger;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -19,30 +23,32 @@ public class WidgetProvider extends AppWidgetProvider {
     private String humidity;
     private String light;
 
+
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
-        appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, getClass()));
-        for (int i = 0; i < appWidgetIds.length; i++) {
-            updateAppWidget(context, appWidgetManager, appWidgetIds[i]);
+        for (int appWidgetId : appWidgetIds) {
+            updateAppWidget(context, appWidgetManager, appWidgetId);
         }
     }
 
     private void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
+
+        Intent intent = new Intent(context, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget_main);
+        updateViews.setOnClickPendingIntent(R.id.widget_layout, pendingIntent);
         updateViews.setTextViewText(R.id.tv_degree, temperature);
         updateViews.setTextViewText(R.id.tv_humidity, humidity);
         updateViews.setTextViewText(R.id.tv_lux, light);
-        Log.d("tttt", "update"+":"+temperature+":"+humidity+":"+light);
+
+        appWidgetManager.updateAppWidget(appWidgetId, updateViews);
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
         if (intent.getAction().equals(BluetoothService.ACTION_RECEIVED_DATA)) {
-            Log.d("tttt", "re");
-
-
             temperature = intent.getStringExtra(BluetoothService.FLAG_TEMPERATURE);
             humidity = intent.getStringExtra(BluetoothService.FLAG_HUMIDITY);
             light = intent.getStringExtra(BluetoothService.FLAG_LIGHT);
