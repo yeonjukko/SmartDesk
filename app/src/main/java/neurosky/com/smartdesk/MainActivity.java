@@ -10,11 +10,14 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
 import neurosky.com.smartdesk.activity.SmartDeskActivity;
 import neurosky.com.smartdesk.manager.ConnectManager;
+import neurosky.com.smartdesk.manager.LongPressListener;
 import neurosky.com.smartdesk.service.BluetoothService;
 
 public class MainActivity extends SmartDeskActivity implements View.OnClickListener {
@@ -22,9 +25,9 @@ public class MainActivity extends SmartDeskActivity implements View.OnClickListe
     private TextView textViewReceive;
     private TextView textViewStatus;
 
+
     private BroadcastReceiver receiver;
     private Messenger messenger;
-
     private ServiceConnection connection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
             messenger = new Messenger(service);
@@ -45,26 +48,23 @@ public class MainActivity extends SmartDeskActivity implements View.OnClickListe
         textViewStatus = (TextView) findViewById(R.id.tv_status);
 
         findViewById(R.id.bt_connect).setOnClickListener(this);
-        findViewById(R.id.bt_1).setOnClickListener(this);
-        findViewById(R.id.bt_2).setOnClickListener(this);
-        findViewById(R.id.bt_3).setOnClickListener(this);
-        findViewById(R.id.bt_4).setOnClickListener(this);
-        findViewById(R.id.bt_5).setOnClickListener(this);
-        findViewById(R.id.bt_6).setOnClickListener(this);
-        findViewById(R.id.bt_7).setOnClickListener(this);
-        findViewById(R.id.bt_8).setOnClickListener(this);
-    }
+        findViewById(R.id.bt_1).setOnTouchListener(touchListener);
+        findViewById(R.id.bt_2).setOnTouchListener(touchListener);
+        findViewById(R.id.bt_3).setOnTouchListener(touchListener);
+        findViewById(R.id.bt_4).setOnTouchListener(touchListener);
+        findViewById(R.id.bt_5).setOnTouchListener(touchListener);
+        findViewById(R.id.bt_6).setOnTouchListener(touchListener);
+        findViewById(R.id.bt_7).setOnTouchListener(touchListener);
+        findViewById(R.id.bt_8).setOnTouchListener(touchListener);
 
-    @Override
-    protected void onResume() {
-        super.onResume();
         regReceiver();
         bindService(new Intent(getContext(), BluetoothService.class), connection, Context.BIND_AUTO_CREATE);
     }
 
+
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onDestroy() {
+        super.onDestroy();
         unregReceiver();
         unbindService(connection);
     }
@@ -81,45 +81,64 @@ public class MainActivity extends SmartDeskActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        Message msg = Message.obtain(null, BluetoothService.SEND_DATA, 0, 0);
-        Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.bt_connect:
                 textViewStatus.setText("연결중...");
-                msg = Message.obtain(null, BluetoothService.CONNECT_DEVICE, 0, 0);
-                break;
-            case R.id.bt_1:
-                bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_DESK_UP);
-                break;
-            case R.id.bt_2:
-                bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_DESK_DOWN);
-                break;
-            case R.id.bt_3:
-                bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_LED_UP);
-                break;
-            case R.id.bt_4:
-                bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_LED_DOWN);
-                break;
-            case R.id.bt_5:
-                bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_CENTER_TABLE_UP);
-                break;
-            case R.id.bt_6:
-                bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_CENTER_TABLE_DOWN);
-                break;
-            case R.id.bt_7:
-                bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_MAIN_TABLE_UP);
-                break;
-            case R.id.bt_8:
-                bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_MAIN_TABLE_DOWN);
+                Message msg = Message.obtain(null, BluetoothService.CONNECT_DEVICE, 0, 0);
+                try {
+                    messenger.send(msg);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
                 break;
         }
-        msg.setData(bundle);
-        try {
-            messenger.send(msg);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+
     }
+
+    private View.OnTouchListener touchListener = new LongPressListener() {
+        @Override
+        public void onPressing(View view) {
+            Message msg = Message.obtain(null, BluetoothService.SEND_DATA, 0, 0);
+            Bundle bundle = new Bundle();
+            switch (view.getId()) {
+                case R.id.bt_connect:
+                    textViewStatus.setText("연결중...");
+                    msg = Message.obtain(null, BluetoothService.CONNECT_DEVICE, 0, 0);
+                    break;
+                case R.id.bt_1:
+                    bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_DESK_UP);
+                    break;
+                case R.id.bt_2:
+                    bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_DESK_DOWN);
+                    break;
+                case R.id.bt_3:
+                    bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_LED_UP);
+                    break;
+                case R.id.bt_4:
+                    bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_LED_DOWN);
+                    break;
+                case R.id.bt_5:
+                    bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_CENTER_TABLE_UP);
+                    break;
+                case R.id.bt_6:
+                    bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_CENTER_TABLE_DOWN);
+                    break;
+                case R.id.bt_7:
+                    bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_MAIN_TABLE_UP);
+                    break;
+                case R.id.bt_8:
+                    bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_MAIN_TABLE_DOWN);
+                    break;
+            }
+            msg.setData(bundle);
+            try {
+                messenger.send(msg);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+    };
+
 
     private class BluetoothReceiver extends BroadcastReceiver {
         @Override
@@ -134,7 +153,12 @@ public class MainActivity extends SmartDeskActivity implements View.OnClickListe
             } else if (intent.getAction().equals(BluetoothService.ACTION_DISCONNECT_DEVICE)) {
                 textViewStatus.setText("연결끊김");
             } else if (intent.getAction().equals(BluetoothService.ACTION_ERROR)) {
-                textViewStatus.setText("에러");
+                Exception e = (Exception) intent.getSerializableExtra(BluetoothService.FLAG_ERROR);
+                if (e instanceof ConnectManager.BluetoothOffException) {
+                    textViewStatus.setText("연결안됨");
+                } else {
+                    textViewStatus.setText("에러");
+                }
             }
         }
     }

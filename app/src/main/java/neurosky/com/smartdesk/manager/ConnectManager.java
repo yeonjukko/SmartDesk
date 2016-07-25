@@ -320,6 +320,15 @@ public class ConnectManager {
         }
     }
 
+    public static class BluetoothOffException extends IllegalStateException {
+        public BluetoothOffException() {
+            super("블루투스를 켜주세요.");
+        }
+
+        public BluetoothOffException(String err) {
+            super(err);
+        }
+    }
 
     public static String getCmdChangeLed(byte red, byte green, byte blue, byte white, byte c) {
         //STX,W,r000,g000,b000,w000,c000,ETX
