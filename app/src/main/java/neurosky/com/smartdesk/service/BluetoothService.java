@@ -30,6 +30,7 @@ public class BluetoothService extends Service implements ConnectManager.OnBlueto
     public static final String ACTION_CONNECT_DEVICE = BluetoothService.class.getName() + ".Connected";
     public static final String ACTION_DISCONNECT_DEVICE = BluetoothService.class.getName() + ".Disconnected";
     public static final String ACTION_ERROR = BluetoothService.class.getName() + ".Error";
+    public static final String ACTION_NOT_REG_DEVICE = BluetoothService.class.getName() + ".NotRegDevice";
 
     public static final String FLAG_DATA = "data";
     public static final String FLAG_ERROR = "error";
@@ -105,6 +106,10 @@ public class BluetoothService extends Service implements ConnectManager.OnBlueto
         sendBroadcast(new Intent(ACTION_CONNECT_DEVICE));
     }
 
+    private void sendNotRegDevice() {
+        sendBroadcast(new Intent(ACTION_NOT_REG_DEVICE));
+    }
+
     private void sendReceiveData(String data) {
         Intent intent = new Intent(ACTION_RECEIVED_DATA);
         Bundle result = ConnectManager.getParseStatus(data);
@@ -163,7 +168,7 @@ public class BluetoothService extends Service implements ConnectManager.OnBlueto
                 sendConnected();
             }
         } catch (ConnectManager.NotSavedDeviceException e) {
-            startRegDeviceActivity();
+            sendNotRegDevice();
         }
     }
 
@@ -173,6 +178,7 @@ public class BluetoothService extends Service implements ConnectManager.OnBlueto
         filter.addAction(ACTION_CONNECT_DEVICE);
         filter.addAction(ACTION_DISCONNECT_DEVICE);
         filter.addAction(ACTION_ERROR);
+        filter.addAction(ACTION_NOT_REG_DEVICE);
         return filter;
     }
 

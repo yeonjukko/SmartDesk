@@ -11,14 +11,31 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity" android:theme="@style/Theme.AppCompat.NoActionBar"
+        <activity
+            android:label="Desk Control"
+            android:name=".activity.SmartDeskMainActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:label="LED Control"
+            android:name=".activity.SmartLedActivity"
             android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".activity.RegDeviceActivity"
-            android:theme="@style/NoAciontBarDialog"
-            android:label="Register Device" />
+            android:label="Register Device"
+            android:theme="@style/NoAciontBarDialog" />
 
         <receiver
             android:name=".WidgetProvider"
@@ -40,13 +57,7 @@
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".activity.SmartLedActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>

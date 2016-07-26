@@ -6,12 +6,9 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.IBinder;
-import android.os.Messenger;
-import android.util.Log;
 import android.widget.RemoteViews;
 
+import neurosky.com.smartdesk.activity.SmartDeskMainActivity;
 import neurosky.com.smartdesk.service.BluetoothService;
 
 /**
@@ -34,7 +31,7 @@ public class WidgetProvider extends AppWidgetProvider {
 
     private void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
 
-        Intent intent = new Intent(context, MainActivity.class);
+        Intent intent = new Intent(context, SmartDeskMainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget_main);
         updateViews.setOnClickPendingIntent(R.id.widget_layout, pendingIntent);

@@ -1,4 +1,4 @@
-package neurosky.com.smartdesk;
+package neurosky.com.smartdesk.activity;
 
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -18,15 +18,17 @@ import android.widget.TextView;
 
 import com.dd.CircularProgressButton;
 
+import neurosky.com.smartdesk.R;
 import neurosky.com.smartdesk.activity.RegDeviceActivity;
 import neurosky.com.smartdesk.activity.SmartDeskActivity;
 import neurosky.com.smartdesk.manager.ConnectManager;
 import neurosky.com.smartdesk.manager.LongPressListener;
 import neurosky.com.smartdesk.service.BluetoothService;
 
-public class MainActivity extends SmartDeskActivity implements View.OnClickListener {
-    //
-//    private TextView textViewReceive;
+public class SmartDeskMainActivity extends SmartDeskActivity implements View.OnClickListener {
+    private static final int RESULT_REG_DEVICE = 100;
+
+    //    private TextView textViewReceive;
 //    private TextView textViewStatus;
     private CircularProgressButton buttonConnect;
     private ImageView buttonSetting;
@@ -47,7 +49,8 @@ public class MainActivity extends SmartDeskActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main2);
 //        textViewReceive = (TextView) findViewById(R.id.tv_receive);
 //        textViewReceive.setEnabled(false);
 //        textViewStatus = (TextView) findViewById(R.id.tv_status);
@@ -78,6 +81,14 @@ public class MainActivity extends SmartDeskActivity implements View.OnClickListe
         unbindService(connection);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_REG_DEVICE) {
+            buttonConnect.setProgress(0);
+        }
+    }
+
     private void regReceiver() {
         receiver = new BluetoothReceiver();
         registerReceiver(receiver, BluetoothService.getIntentFilterSet());
@@ -105,7 +116,7 @@ public class MainActivity extends SmartDeskActivity implements View.OnClickListe
                 break;
             case R.id.bt_setting:
                 Intent intent = new Intent(getContext(), RegDeviceActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, RESULT_REG_DEVICE);
                 break;
 
         }
@@ -169,14 +180,11 @@ public class MainActivity extends SmartDeskActivity implements View.OnClickListe
                 buttonConnect.setProgress(-1);
                 //textViewStatus.setText("연결끊김");
             } else if (intent.getAction().equals(BluetoothService.ACTION_ERROR)) {
-                Exception e = (Exception) intent.getSerializableExtra(BluetoothService.FLAG_ERROR);
                 buttonConnect.setProgress(0);
                 buttonConnect.setProgress(-1);
-                if (e instanceof ConnectManager.BluetoothOffException) {
-                    // textViewStatus.setText("연결안됨");
-                } else {
-                    // textViewStatus.setText("에러");
-                }
+
+            } else if (intent.getAction().equals(BluetoothService.ACTION_NOT_REG_DEVICE)) {
+                startActivityForResult(new Intent(getContext(), RegDeviceActivity.class), RESULT_REG_DEVICE);
             }
         }
     }

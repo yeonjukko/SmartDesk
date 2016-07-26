@@ -13,6 +13,8 @@ import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.dd.CircularProgressButton;
 import com.larswerkman.holocolorpicker.ColorPicker;
@@ -24,6 +26,10 @@ import neurosky.com.smartdesk.service.BluetoothService;
 
 public class SmartLedActivity extends SmartDeskActivity implements View.OnClickListener, ColorPicker.OnColorSelectedListener, ColorPicker.OnColorChangedListener {
 
+    private static final int RESULT_REG_DEVICE = 100;
+
+    private ViewGroup layoutMood, layoutRelax, layoutStudy, layoutBrainWave;
+    private ImageButton buttonSetting;
     private CircularProgressButton buttonConnect;
     private BroadcastReceiver receiver;
     private Messenger messenger;
@@ -41,7 +47,8 @@ public class SmartLedActivity extends SmartDeskActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_smart_led);
+        //setContentView(R.layout.activity_smart_led);
+        setContentView(R.layout.activity_smart_led2);
         regReceiver();
         bindService(new Intent(getContext(), BluetoothService.class), connection, Context.BIND_AUTO_CREATE);
         setLayout();
@@ -57,12 +64,23 @@ public class SmartLedActivity extends SmartDeskActivity implements View.OnClickL
     private void setLayout() {
         buttonConnect = (CircularProgressButton) findViewById(R.id.bt_connect);
         buttonConnect.setOnClickListener(this);
+        buttonSetting = (ImageButton) findViewById(R.id.bt_setting);
+        buttonSetting.setOnClickListener(this);
         ColorPicker picker = (ColorPicker) findViewById(R.id.picker);
         OpacityBar opacityBar = (OpacityBar) findViewById(R.id.opacitybar);
         picker.setShowOldCenterColor(false);
         picker.addOpacityBar(opacityBar);
         picker.setOnColorChangedListener(this);
         picker.setOnColorSelectedListener(this);
+
+        layoutMood = (ViewGroup) findViewById(R.id.layout_mood);
+        layoutMood.setOnClickListener(this);
+        layoutRelax = (ViewGroup) findViewById(R.id.layout_relax);
+        layoutRelax.setOnClickListener(this);
+        layoutStudy = (ViewGroup) findViewById(R.id.layout_study);
+        layoutStudy.setOnClickListener(this);
+        layoutBrainWave = (ViewGroup) findViewById(R.id.layout_brainwave);
+        layoutBrainWave.setOnClickListener(this);
     }
 
     private long sendTime;
@@ -79,13 +97,48 @@ public class SmartLedActivity extends SmartDeskActivity implements View.OnClickL
     }
 
     public void onClick(View view) {
+        Message msg = Message.obtain(null, BluetoothService.SEND_DATA, 0, 0);
+        Bundle bundle = new Bundle();
+        msg.setData(bundle);
         switch (view.getId()) {
             case R.id.bt_connect:
                 //textViewStatus.setText("연결중...");
                 buttonConnect.setProgress(0);
                 buttonConnect.setIndeterminateProgressMode(true); // turn on indeterminate progress
                 buttonConnect.setProgress(50);
-                Message msg = Message.obtain(null, BluetoothService.CONNECT_DEVICE, 0, 0);
+                msg = Message.obtain(null, BluetoothService.CONNECT_DEVICE, 0, 0);
+                try {
+                    messenger.send(msg);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case R.id.layout_mood:
+                bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed(23, 43, 243, 220, 0));
+                try {
+                    messenger.send(msg);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case R.id.layout_relax:
+                bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed(230, 143, 43, 120, 0));
+                try {
+                    messenger.send(msg);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case R.id.layout_study:
+                bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed(22, 90, 200, 220, 0));
+                try {
+                    messenger.send(msg);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case R.id.layout_brainwave:
+                bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed(50, 43, 210, 100, 0));
                 try {
                     messenger.send(msg);
                 } catch (RemoteException e) {
@@ -93,12 +146,19 @@ public class SmartLedActivity extends SmartDeskActivity implements View.OnClickL
                 }
                 break;
             case R.id.bt_setting:
-                Intent intent = new Intent(getContext(), RegDeviceActivity.class);
-                startActivity(intent);
+                startActivityForResult(new Intent(getContext(), RegDeviceActivity.class), RESULT_REG_DEVICE);
                 break;
 
         }
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESULT_REG_DEVICE) {
+            buttonConnect.setProgress(0);
+        }
     }
 
     private void regReceiver() {
@@ -154,6 +214,8 @@ public class SmartLedActivity extends SmartDeskActivity implements View.OnClickL
             } else if (intent.getAction().equals(BluetoothService.ACTION_ERROR)) {
                 buttonConnect.setProgress(0);
                 buttonConnect.setProgress(-1);
+            } else if (intent.getAction().equals(BluetoothService.ACTION_NOT_REG_DEVICE)) {
+                startActivityForResult(new Intent(getContext(), RegDeviceActivity.class), RESULT_REG_DEVICE);
             }
         }
     }
