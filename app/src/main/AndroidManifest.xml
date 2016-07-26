@@ -17,6 +17,7 @@
         </activity>
         <activity
             android:name=".activity.RegDeviceActivity"
+            android:theme="@style/NoAciontBarDialog"
             android:label="Register Device" />
 
         <receiver

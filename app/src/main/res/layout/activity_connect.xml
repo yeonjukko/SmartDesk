@@ -10,6 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".activity.RegDeviceActivity">
 
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_device_list"
         android:layout_width="match_parent"

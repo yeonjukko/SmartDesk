@@ -39,7 +39,7 @@ public class BluetoothListAdapter extends RecyclerView.Adapter<BluetoothListAdap
     @Override
     public void onBindViewHolder(BluetoothHolder holder, int position) {
         final BluetoothDevice device = devices.get(position);
-        holder.textViewIndex.setText(position + ".");
+        holder.textViewIndex.setText(position+1 + ".");
         holder.textViewName.setText(device.getName());
         holder.textViewAddress.setText(device.getAddress());
         holder.layoutMain.setOnClickListener(new View.OnClickListener() {

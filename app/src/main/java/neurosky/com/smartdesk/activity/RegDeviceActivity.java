@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toolbar;
 
 import java.util.Set;
 
@@ -22,7 +25,7 @@ public class RegDeviceActivity extends SmartDeskActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_connect);
+        setContentView(R.layout.dialog_notification);
         connectManager = ConnectManager.getInstance(getContext());
         setLayout();
     }
@@ -44,6 +47,15 @@ public class RegDeviceActivity extends SmartDeskActivity {
                         }
                     }).show();
         } else {
+            TextView textViewTitle = (TextView) findViewById(R.id.tv_dialog_title);
+            textViewTitle.setText("Bluetooth Connection");
+            findViewById(R.id.bt_cancel).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    finish();
+                }
+            });
+
             bluetoothListAdapter.setData(connectManager.getBluetoothPairDevices());
         }
     }

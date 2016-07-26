@@ -59,6 +59,7 @@ public class SmartLedActivity extends SmartDeskActivity implements View.OnClickL
         buttonConnect.setOnClickListener(this);
         ColorPicker picker = (ColorPicker) findViewById(R.id.picker);
         OpacityBar opacityBar = (OpacityBar) findViewById(R.id.opacitybar);
+        picker.setShowOldCenterColor(false);
         picker.addOpacityBar(opacityBar);
         picker.setOnColorChangedListener(this);
         picker.setOnColorSelectedListener(this);
