@@ -21,13 +21,13 @@ public abstract class LongPressListener implements View.OnTouchListener {
                 public void run() {
                     while (true) {
                         try {
-                            sleep(300);
                             view.post(new Runnable() {
                                 @Override
                                 public void run() {
                                     onPressing(view);
                                 }
                             });
+                            sleep(300);
                         } catch (InterruptedException e) {
                             break;
                         }
