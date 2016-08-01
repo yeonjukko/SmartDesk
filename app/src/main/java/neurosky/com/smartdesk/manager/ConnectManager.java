@@ -15,7 +15,7 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
+import java.nio.charset.StandardCharsets;
 import java.util.Set;
 import java.util.UUID;
 
@@ -229,7 +229,7 @@ public class ConnectManager {
                 DataOutputStream outputStream = new DataOutputStream(bluetoothSocket.getOutputStream());
                 for (String data : strings) {
                     data = makeQuery(data);
-                    outputStream.writeChars(data);
+                    outputStream.write(data.getBytes(StandardCharsets.US_ASCII));
                     outputStream.flush();
                     Log.d(TAG, "블루투스 기기로 데이터 전송:" + data);
                 }
