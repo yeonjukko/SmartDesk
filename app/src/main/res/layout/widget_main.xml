@@ -15,22 +15,22 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="center"
             android:background="@drawable/bg_left_rounded"
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="200dp"
-                android:layout_height="200dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:padding="30dp"
                 android:src="@drawable/ic_humidity" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -40,14 +40,14 @@
                     android:layout_height="wrap_content"
                     android:text="10"
                     android:textColor="@android:color/white"
-                    android:textSize="80dp" />
+                    android:textSize="40dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=" %"
                     android:textColor="@android:color/white"
-                    android:textSize="60dp" />
+                    android:textSize="30dp" />
             </LinearLayout>
 
 
@@ -55,22 +55,22 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="center"
             android:background="@android:color/holo_green_light"
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="200dp"
-                android:layout_height="200dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:padding="30dp"
                 android:src="@drawable/ic_lux" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -80,14 +80,14 @@
                     android:layout_height="wrap_content"
                     android:text="102"
                     android:textColor="@android:color/white"
-                    android:textSize="80dp" />
+                    android:textSize="40dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=" lux"
                     android:textColor="@android:color/white"
-                    android:textSize="60dp" />
+                    android:textSize="30dp" />
             </LinearLayout>
 
 
@@ -95,22 +95,22 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/bg_right_rounded"
             android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="200dp"
-                android:layout_height="200dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:padding="30dp"
                 android:src="@drawable/ic_thermometer" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -120,14 +120,14 @@
                     android:layout_height="wrap_content"
                     android:text="30"
                     android:textColor="@android:color/white"
-                    android:textSize="80dp" />
+                    android:textSize="40dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=" ℃"
                     android:textColor="@android:color/white"
-                    android:textSize="60dp" />
+                    android:textSize="30dp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -138,7 +138,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="3"
-        android:src="@drawable/ic_smartdesk" />
+        android:src="@drawable/bc_3" />
 
 
 </LinearLayout>
