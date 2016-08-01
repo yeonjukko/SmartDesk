@@ -332,7 +332,19 @@ public class ConnectManager {
 
     public static String getCmdChangeLed(int red, int green, int blue, int white, int c) {
         //STX,W,r000,g000,b000,w000,c000,ETX
-        return "Wr" + red + "g" + green + "b" + blue + "w" + white + "c" + c;
+        return "Wr" + int2String(red) + "g" + int2String(green) + "b" + int2String(blue) + "w" + int2String(white) + "c" + int2String(c);
+    }
+
+    private static String int2String(int num) {
+        String result = "";
+        if (num >= 100) {
+            result += Integer.toString(num);
+        } else if (num >= 10) {
+            result += "0" + Integer.toString(num);
+        } else {
+            result += "00" + Integer.toString(num);
+        }
+        return result;
     }
 
     public static Bundle getParseStatus(String data) {

@@ -20,6 +20,9 @@ import com.dd.CircularProgressButton;
 import com.larswerkman.holocolorpicker.ColorPicker;
 import com.larswerkman.holocolorpicker.OpacityBar;
 
+import java.nio.ByteBuffer;
+import java.util.Arrays;
+
 import neurosky.com.smartdesk.R;
 import neurosky.com.smartdesk.manager.ConnectManager;
 import neurosky.com.smartdesk.service.BluetoothService;
@@ -108,7 +111,8 @@ public class SmartLedActivity extends SmartDeskActivity implements View.OnClickL
                 buttonConnect.setProgress(50);
                 msg = Message.obtain(null, BluetoothService.CONNECT_DEVICE, 0, 0);
                 try {
-                    messenger.send(msg);
+                    if (messenger != null)
+                        messenger.send(msg);
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
@@ -116,7 +120,8 @@ public class SmartLedActivity extends SmartDeskActivity implements View.OnClickL
             case R.id.layout_mood:
                 bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed(23, 43, 243, 220, 0));
                 try {
-                    messenger.send(msg);
+                    if (messenger != null)
+                        messenger.send(msg);
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
@@ -124,7 +129,8 @@ public class SmartLedActivity extends SmartDeskActivity implements View.OnClickL
             case R.id.layout_relax:
                 bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed(230, 143, 43, 120, 0));
                 try {
-                    messenger.send(msg);
+                    if (messenger != null)
+                        messenger.send(msg);
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
@@ -132,7 +138,8 @@ public class SmartLedActivity extends SmartDeskActivity implements View.OnClickL
             case R.id.layout_study:
                 bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed(22, 90, 200, 220, 0));
                 try {
-                    messenger.send(msg);
+                    if (messenger != null)
+                        messenger.send(msg);
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
@@ -140,7 +147,8 @@ public class SmartLedActivity extends SmartDeskActivity implements View.OnClickL
             case R.id.layout_brainwave:
                 bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed(50, 43, 210, 100, 0));
                 try {
-                    messenger.send(msg);
+                    if (messenger != null)
+                        messenger.send(msg);
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
@@ -177,30 +185,28 @@ public class SmartLedActivity extends SmartDeskActivity implements View.OnClickL
     }
 
     private void sendColor(int colorValue) {
-        String tmp;
-        if (colorValue == 0) {
-            tmp = "000000000";
-        } else {
-            tmp = Integer.toHexString(colorValue);
-            if (tmp.length() == 7) {
-                tmp = "0" + tmp;
-            }
-        }
 
-        int white = Integer.parseInt(tmp.substring(0, 2), 16);
-        int red = Integer.parseInt(tmp.substring(2, 4), 16);
-        int green = Integer.parseInt(tmp.substring(4, 6), 16);
-        int blue = Integer.parseInt(tmp.substring(5, 8), 16);
+        int[] bytes = int2Byte(colorValue);
 
         Message msg = Message.obtain(null, BluetoothService.SEND_DATA, 0, 0);
         Bundle bundle = new Bundle();
-        bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed(red, green, blue, white, 0));
+        bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed(bytes[1], bytes[2], bytes[3], bytes[0], 0));
         msg.setData(bundle);
         try {
-            messenger.send(msg);
+            if (messenger != null)
+                messenger.send(msg);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+    }
+
+    private int[] int2Byte(int data) {
+        int[] byteArray = new int[4];
+        byteArray[0] = ((byte) (data >> 24)) & 0xff;
+        byteArray[1] = ((byte) (data >> 16)) & 0xff;
+        byteArray[2] = ((byte) (data >> 8)) & 0xff;
+        byteArray[3] = ((byte) (data)) & 0xff;
+        return byteArray;
     }
 
     private class BluetoothReceiver extends BroadcastReceiver {

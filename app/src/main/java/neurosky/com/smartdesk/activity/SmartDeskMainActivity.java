@@ -109,7 +109,8 @@ public class SmartDeskMainActivity extends SmartDeskActivity implements View.OnC
                 buttonConnect.setProgress(50);
                 Message msg = Message.obtain(null, BluetoothService.CONNECT_DEVICE, 0, 0);
                 try {
-                    messenger.send(msg);
+                    if (messenger != null)
+                        messenger.send(msg);
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
@@ -156,7 +157,8 @@ public class SmartDeskMainActivity extends SmartDeskActivity implements View.OnC
             }
             msg.setData(bundle);
             try {
-                messenger.send(msg);
+                if (messenger != null)
+                    messenger.send(msg);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
