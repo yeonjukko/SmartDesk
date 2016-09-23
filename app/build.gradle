@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "neurosky.com.smartdesk"
-        minSdkVersion 20
+        minSdkVersion 16
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
