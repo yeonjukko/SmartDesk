@@ -5,12 +5,12 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,15 +19,14 @@ import android.widget.ImageButton;
 import com.dd.CircularProgressButton;
 import com.larswerkman.holocolorpicker.ColorPicker;
 import com.larswerkman.holocolorpicker.OpacityBar;
-
-import java.nio.ByteBuffer;
-import java.util.Arrays;
+import com.larswerkman.holocolorpicker.OpacityBar.OnOpacityChangedListener;
 
 import neurosky.com.smartdesk.R;
 import neurosky.com.smartdesk.manager.ConnectManager;
+import neurosky.com.smartdesk.manager.LongPressListener;
 import neurosky.com.smartdesk.service.BluetoothService;
 
-public class SmartLedActivity extends SmartDeskActivity implements View.OnClickListener, ColorPicker.OnColorSelectedListener, ColorPicker.OnColorChangedListener {
+public class SmartLedActivity extends SmartDeskActivity implements View.OnClickListener, ColorPicker.OnColorSelectedListener, ColorPicker.OnColorChangedListener, OnOpacityChangedListener {
 
     private static final int RESULT_REG_DEVICE = 100;
 
@@ -46,12 +45,15 @@ public class SmartLedActivity extends SmartDeskActivity implements View.OnClickL
             messenger = null;
         }
     };
+    ColorPicker picker;
+    OpacityBar opacityBarWarm, opacityBarCool;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_smart_led);
-        setContentView(R.layout.activity_smart_led2);
+        //휴대폰 환경으로 테스트시 아래 주석 해제
+        setContentView(R.layout.activity_smart_led);
         regReceiver();
         bindService(new Intent(getContext(), BluetoothService.class), connection, Context.BIND_AUTO_CREATE);
         setLayout();
@@ -69,12 +71,17 @@ public class SmartLedActivity extends SmartDeskActivity implements View.OnClickL
         buttonConnect.setOnClickListener(this);
         buttonSetting = (ImageButton) findViewById(R.id.bt_setting);
         buttonSetting.setOnClickListener(this);
-        ColorPicker picker = (ColorPicker) findViewById(R.id.picker);
-        OpacityBar opacityBar = (OpacityBar) findViewById(R.id.opacitybar);
+        picker = (ColorPicker) findViewById(R.id.picker);
         picker.setShowOldCenterColor(false);
-        picker.addOpacityBar(opacityBar);
         picker.setOnColorChangedListener(this);
         picker.setOnColorSelectedListener(this);
+
+        opacityBarWarm = (OpacityBar) findViewById(R.id.opacitybarWarm);
+        opacityBarWarm.setColor(Color.RED);
+        opacityBarWarm.setOnOpacityChangedListener(this);
+        opacityBarCool = (OpacityBar) findViewById(R.id.opacitybarCool);
+        opacityBarCool.setColor(Color.BLUE);
+        opacityBarCool.setOnOpacityChangedListener(this);
 
         layoutMood = (ViewGroup) findViewById(R.id.layout_mood);
         layoutMood.setOnClickListener(this);
@@ -84,19 +91,23 @@ public class SmartLedActivity extends SmartDeskActivity implements View.OnClickL
         layoutStudy.setOnClickListener(this);
         layoutBrainWave = (ViewGroup) findViewById(R.id.layout_brainwave);
         layoutBrainWave.setOnClickListener(this);
+
+        findViewById(R.id.bt_3).setOnTouchListener(touchListener);
+        findViewById(R.id.bt_4).setOnTouchListener(touchListener);
+        findViewById(R.id.bt_9).setOnTouchListener(touchListener);
+        findViewById(R.id.bt_10).setOnTouchListener(touchListener);
     }
 
     private long sendTime;
 
+
     @Override
     public void onColorChanged(int colorValue) {
-
-        if ((System.currentTimeMillis() - sendTime) < 100) {
+        if ((System.currentTimeMillis() - sendTime) < 150) {
             return;
         }
         sendTime = System.currentTimeMillis();
-
-        sendColor(colorValue);
+        sendColor();
     }
 
     public void onClick(View view) {
@@ -161,6 +172,7 @@ public class SmartLedActivity extends SmartDeskActivity implements View.OnClickL
 
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -181,16 +193,16 @@ public class SmartLedActivity extends SmartDeskActivity implements View.OnClickL
 
     @Override
     public void onColorSelected(int color) {
-        sendColor(color);
+        sendColor();
     }
 
-    private void sendColor(int colorValue) {
-
-        int[] bytes = int2Byte(colorValue);
+    private void sendColor() {
+        int[] bytes = int2Byte(picker.getColor());
+        Log.d("ttt", ConnectManager.getCmdChangeLed(bytes[1], bytes[2], bytes[3], opacityBarWarm.getOpacity(), opacityBarCool.getOpacity()));
 
         Message msg = Message.obtain(null, BluetoothService.SEND_DATA, 0, 0);
         Bundle bundle = new Bundle();
-        bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed(bytes[1], bytes[2], bytes[3], bytes[0], 0));
+        bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed(bytes[1], bytes[2], bytes[3], opacityBarWarm.getOpacity(), opacityBarCool.getOpacity()));
         msg.setData(bundle);
         try {
             if (messenger != null)
@@ -209,6 +221,16 @@ public class SmartLedActivity extends SmartDeskActivity implements View.OnClickL
         return byteArray;
     }
 
+    @Override
+    public void onOpacityChanged(int opacity) {
+        if ((System.currentTimeMillis() - sendTime) < 150) {
+            return;
+        }
+        sendTime = System.currentTimeMillis();
+        sendColor();
+    }
+
+
     private class BluetoothReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -225,5 +247,52 @@ public class SmartLedActivity extends SmartDeskActivity implements View.OnClickL
             }
         }
     }
+
+    private View.OnTouchListener touchListener = new LongPressListener() {
+        @Override
+        public void onPressing(View view) {
+            Message msg = Message.obtain(null, BluetoothService.SEND_DATA, 0, 0);
+            Bundle bundle = new Bundle();
+            switch (view.getId()) {
+                case R.id.bt_1:
+                    bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_DESK_UP);
+                    break;
+                case R.id.bt_2:
+                    bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_DESK_DOWN);
+                    break;
+                case R.id.bt_3:
+                    bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_LED_UP);
+                    break;
+                case R.id.bt_4:
+                    bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_LED_DOWN);
+                    break;
+                case R.id.bt_5:
+                    bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_CENTER_TABLE_UP);
+                    break;
+                case R.id.bt_6:
+                    bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_CENTER_TABLE_DOWN);
+                    break;
+                case R.id.bt_7:
+                    bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_MAIN_TABLE_UP);
+                    break;
+                case R.id.bt_8:
+                    bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_MAIN_TABLE_DOWN);
+                    break;
+                case R.id.bt_9:
+                    bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_LED_OFF);
+                    break;
+                case R.id.bt_10:
+                    bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_LED_ON);
+                    break;
+            }
+            msg.setData(bundle);
+            try {
+                if (messenger != null)
+                    messenger.send(msg);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+    };
 
 }

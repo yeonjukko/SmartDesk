@@ -12,10 +12,77 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:gravity="center_vertical"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"
+            android:text="BioniCube SmartDesk"
+            android:textSize="40dp"
+            android:textStyle="bold" />
 
+        <ImageView
+            android:layout_width="400dp"
+            android:layout_height="400dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/ic_main" />
+
+        <TextView
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="20dp"
+            android:text="❖Smart Motion Control System"
+            android:textSize="35dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="20dp"
+            android:text="❖Smart LED Control Stand"
+            android:textSize="35dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="20dp"
+            android:text="❖BLE Communication System"
+            android:textSize="35dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="20dp"
+            android:text="❖Wide Touch Tablet System"
+            android:textSize="35dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="20dp"
+            android:text="❖Wireless Charger"
+            android:textSize="35dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="20dp"
+            android:text="❖Healthcare Monitoring And Analysis"
+            android:textSize="35dp" />
 
     </LinearLayout>
 
@@ -24,27 +91,29 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical">
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
                 android:layout_marginTop="50dp"
                 android:gravity="center"
-                android:text="Smart System Setting"
+                android:text="System Setting"
                 android:textSize="40dp" />
+
             <ImageView
                 android:id="@+id/bt_setting"
-                android:layout_marginTop="40dp"
-                android:layout_marginRight="80dp"
-                android:layout_gravity="right"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/ic_setting"/>
+                android:layout_gravity="right"
+                android:layout_marginRight="80dp"
+                android:layout_marginTop="40dp"
+                android:src="@drawable/ic_setting" />
         </FrameLayout>
-
 
 
         <com.dd.CircularProgressButton
@@ -77,7 +146,7 @@
 
             <ImageView
                 android:id="@+id/bt_2"
-                android:layout_width="50dp"
+                android:layout_width="70dp"
                 android:layout_height="50dp"
                 android:src="@drawable/ic_minus"
                 android:text="CMD_DESK_DOWN" />
@@ -118,7 +187,7 @@
 
             <ImageView
                 android:id="@+id/bt_4"
-                android:layout_width="50dp"
+                android:layout_width="70dp"
                 android:layout_height="50dp"
                 android:src="@drawable/ic_minus"
                 android:text="CMD_LED_DOWN" />
@@ -140,7 +209,6 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-
             android:layout_height="match_parent"
             android:layout_marginLeft="100dp"
             android:layout_weight="1"
@@ -150,12 +218,12 @@
             <TextView
                 android:layout_width="370dp"
                 android:layout_height="wrap_content"
-                android:text="Center Table Height"
+                android:text="Center Table Tilt"
                 android:textSize="30dp" />
 
             <ImageView
                 android:id="@+id/bt_6"
-                android:layout_width="50dp"
+                android:layout_width="70dp"
                 android:layout_height="50dp"
                 android:src="@drawable/ic_minus" />
 
@@ -175,23 +243,23 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-
             android:layout_height="match_parent"
             android:layout_marginLeft="100dp"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
 
             <TextView
                 android:layout_width="370dp"
                 android:layout_height="wrap_content"
-                android:text="Tablet Slope"
+                android:text="Tablet KeyPad mode"
                 android:textSize="30dp" />
 
             <ImageView
                 android:id="@+id/bt_8"
-                android:layout_width="50dp"
+                android:layout_width="70dp"
                 android:layout_height="50dp"
                 android:src="@drawable/ic_minus" />
 
@@ -207,6 +275,45 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/ic_plus" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="100dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="370dp"
+                android:layout_height="wrap_content"
+                android:text="Smart LED ON/OFF"
+                android:textSize="30dp" />
+
+            <Button
+                android:id="@+id/bt_9"
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:background="@null"
+                android:text="OFF"
+                android:textSize="35dp" />
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginRight="100dp"
+                android:src="@drawable/ic_light" />
+
+            <Button
+                android:id="@+id/bt_10"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@null"
+                android:text="ON"
+                android:textSize="35dp" />
         </LinearLayout>
 
         <TextView

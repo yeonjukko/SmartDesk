@@ -1,5 +1,6 @@
 package neurosky.com.smartdesk.manager;
 
+import android.annotation.TargetApi;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
@@ -8,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -29,10 +31,12 @@ public class ConnectManager {
     public static final String CMD_DESK_DOWN = "SM1D";
     public static final String CMD_LED_UP = "SM2U";
     public static final String CMD_LED_DOWN = "SM2D";
-    public static final String CMD_CENTER_TABLE_UP = "SM3U";
-    public static final String CMD_CENTER_TABLE_DOWN = "SM3D";
-    public static final String CMD_MAIN_TABLE_UP = "SM4U";
-    public static final String CMD_MAIN_TABLE_DOWN = "SM4D";
+    public static final String CMD_CENTER_TABLE_UP = "SM4U";
+    public static final String CMD_CENTER_TABLE_DOWN = "SM4D";
+    public static final String CMD_MAIN_TABLE_UP = "SM3U";
+    public static final String CMD_MAIN_TABLE_DOWN = "SM3D";
+    public static final String CMD_LED_ON = getCmdChangeLed(0, 0, 0, 100, 100);
+    public static final String CMD_LED_OFF = getCmdChangeLed(0, 0, 0, 0, 0);
 
     private static final String CMD_READ_STATUS = "RDATA";
     //STX,R,000,000,00000,ETX
@@ -178,7 +182,11 @@ public class ConnectManager {
     }
 
     private void unRegReceiver() {
-        context.unregisterReceiver(broadcastReceiver);
+        try {
+            context.unregisterReceiver(broadcastReceiver);
+        } catch (Exception ignored) {
+
+        }
     }
 
     private class ConnectTask extends AsyncTask<Void, Void, Boolean> {
@@ -229,7 +237,7 @@ public class ConnectManager {
                 DataOutputStream outputStream = new DataOutputStream(bluetoothSocket.getOutputStream());
                 for (String data : strings) {
                     data = makeQuery(data);
-                    outputStream.write(data.getBytes(StandardCharsets.US_ASCII));
+                    outputStream.write(data.getBytes("ASCII"));
                     outputStream.flush();
                     Log.d(TAG, "블루투스 기기로 데이터 전송:" + data);
                 }
@@ -284,7 +292,7 @@ public class ConnectManager {
             while (true) {
                 sendData(CMD_READ_STATUS);
                 try {
-                    Thread.sleep(60000);
+                    Thread.sleep(10000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

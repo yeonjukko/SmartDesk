@@ -206,17 +206,104 @@
             <com.larswerkman.holocolorpicker.ColorPicker
                 android:id="@+id/picker"
                 android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_gravity="center" />
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                app:color_wheel_thickness="5dp" />
 
 
             <com.larswerkman.holocolorpicker.OpacityBar
-                android:id="@+id/opacitybar"
+                android:id="@+id/opacitybarWarm"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp" />
+                android:layout_marginTop="20dp"
+                app:bar_pointer_halo_radius="30dp"
+                app:bar_pointer_radius="10dp"
+                app:bar_thickness="25dp" />
 
+            <com.larswerkman.holocolorpicker.OpacityBar
+                android:id="@+id/opacitybarCool"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                app:bar_pointer_halo_radius="30dp"
+                app:bar_pointer_radius="10dp"
+                app:bar_thickness="25dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50dp"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="370dp"
+                    android:layout_height="wrap_content"
+                    android:text="Smart LED Height"
+                    android:textSize="30dp" />
+
+                <ImageView
+                    android:id="@+id/bt_4"
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_minus"
+                    android:text="CMD_LED_DOWN" />
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="100dp"
+                    android:layout_marginRight="100dp"
+                    android:src="@drawable/ic_light" />
+
+                <ImageView
+                    android:id="@+id/bt_3"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_plus"
+                    android:text="CMD_DESK_UP" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="370dp"
+                    android:layout_height="wrap_content"
+                    android:text="Smart LED ON/OFF"
+                    android:textSize="30dp" />
+
+                <Button
+                    android:id="@+id/bt_9"
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:background="@null"
+                    android:text="OFF"
+                    android:textSize="35dp" />
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="100dp"
+                    android:layout_marginRight="100dp" />
+
+                <Button
+                    android:id="@+id/bt_10"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@null"
+                    android:text="ON"
+                    android:textSize="35dp" />
+            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>

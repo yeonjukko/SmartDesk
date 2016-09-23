@@ -10,17 +10,12 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.dd.CircularProgressButton;
 
 import neurosky.com.smartdesk.R;
-import neurosky.com.smartdesk.activity.RegDeviceActivity;
-import neurosky.com.smartdesk.activity.SmartDeskActivity;
 import neurosky.com.smartdesk.manager.ConnectManager;
 import neurosky.com.smartdesk.manager.LongPressListener;
 import neurosky.com.smartdesk.service.BluetoothService;
@@ -38,7 +33,6 @@ public class SmartDeskMainActivity extends SmartDeskActivity implements View.OnC
     private ServiceConnection connection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
             messenger = new Messenger(service);
-            //  textViewReceive.setEnabled(true);
         }
 
         public void onServiceDisconnected(ComponentName className) {
@@ -49,11 +43,10 @@ public class SmartDeskMainActivity extends SmartDeskActivity implements View.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
-        setContentView(R.layout.activity_main2);
-//        textViewReceive = (TextView) findViewById(R.id.tv_receive);
-//        textViewReceive.setEnabled(false);
-//        textViewStatus = (TextView) findViewById(R.id.tv_status);
+        setContentView(R.layout.activity_main);
+        //휴대폰 환경으로 테스트시 아래 주석 해제
+
+        // setContentView(R.layout.activity_main2);
         buttonConnect = (CircularProgressButton) findViewById(R.id.bt_connect);
         buttonSetting = (ImageView) findViewById(R.id.bt_setting);
 
@@ -68,6 +61,8 @@ public class SmartDeskMainActivity extends SmartDeskActivity implements View.OnC
         findViewById(R.id.bt_6).setOnTouchListener(touchListener);
         findViewById(R.id.bt_7).setOnTouchListener(touchListener);
         findViewById(R.id.bt_8).setOnTouchListener(touchListener);
+        findViewById(R.id.bt_9).setOnTouchListener(touchListener);
+        findViewById(R.id.bt_10).setOnTouchListener(touchListener);
 
         regReceiver();
         bindService(new Intent(getContext(), BluetoothService.class), connection, Context.BIND_AUTO_CREATE);
@@ -95,7 +90,11 @@ public class SmartDeskMainActivity extends SmartDeskActivity implements View.OnC
     }
 
     private void unregReceiver() {
-        unregisterReceiver(receiver);
+        try {
+            unregisterReceiver(receiver);
+        } catch (Exception ignored) {
+
+        }
         receiver = null;
     }
 
@@ -153,6 +152,12 @@ public class SmartDeskMainActivity extends SmartDeskActivity implements View.OnC
                     break;
                 case R.id.bt_8:
                     bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_MAIN_TABLE_DOWN);
+                    break;
+                case R.id.bt_9:
+                    bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_LED_OFF);
+                    break;
+                case R.id.bt_10:
+                    bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_LED_ON);
                     break;
             }
             msg.setData(bundle);
