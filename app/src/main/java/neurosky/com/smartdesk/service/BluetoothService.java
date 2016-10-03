@@ -22,7 +22,6 @@ import neurosky.com.smartdesk.manager.ConnectManager;
 public class BluetoothService extends Service implements ConnectManager.OnBluetoothListener {
 
     private static final String TAG = BluetoothService.class.getSimpleName();
-
     public static final int SEND_DATA = 200;
     public static final int CONNECT_DEVICE = 300;
 
