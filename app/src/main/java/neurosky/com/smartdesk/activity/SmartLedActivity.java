@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.dd.CircularProgressButton;
 import com.larswerkman.holocolorpicker.ColorPicker;
@@ -53,7 +54,7 @@ public class SmartLedActivity extends SmartDeskActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_smart_led);
         //휴대폰 환경으로 테스트시 아래 주석 해제
-        setContentView(R.layout.activity_smart_led);
+        setContentView(R.layout.activity_smart_led2);
         regReceiver();
         bindService(new Intent(getContext(), BluetoothService.class), connection, Context.BIND_AUTO_CREATE);
         setLayout();
@@ -156,12 +157,11 @@ public class SmartLedActivity extends SmartDeskActivity implements View.OnClickL
                 }
                 break;
             case R.id.layout_brainwave:
-                bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed(50, 43, 210, 100, 0));
-                try {
-                    if (messenger != null)
-                        messenger.send(msg);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
+
+                if(ConnectManager.getInstance(getContext()).isConnected()){
+                    startActivity(new Intent(getContext(),BrainWaveActivity.class));
+                }else{
+                    Toast.makeText(getContext(),"Please connect bluetooth first.",Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.bt_setting:

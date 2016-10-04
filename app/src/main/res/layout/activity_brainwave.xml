@@ -1,0 +1,207 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".activity.BrainWaveActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/sqText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10px"
+                    android:layout_toRightOf="@+id/sqTitle"
+                    android:text="--" />
+
+
+                <Button
+                    android:id="@+id/startButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/headsetButton"
+                    android:enabled="false"
+                    android:text="Start"
+                    android:textSize="12dp" />
+
+                <Button
+                    android:id="@+id/stopButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/startButton"
+                    android:enabled="false"
+
+                    android:text="Stop"
+                    android:textSize="12dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Brainwave Spectrum"/>
+                    <org.eazegraph.lib.charts.BarChart
+                        android:id="@+id/barchart"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        app:egBarWidth="20dp"
+                        app:egFixedBarWidth="true"
+                        app:egLegendHeight="0dp"
+                        app:egShowDecimal="true" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/attTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/setAlgosButton"
+                        android:text="Attention:" />
+
+                    <TextView
+                        android:id="@+id/attText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/attTitle"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toEndOf="@+id/startButton"
+                        android:layout_toRightOf="@+id/attTitle"
+                        android:text="--" />
+
+                    <at.grabner.circleprogress.CircleProgressView
+                        android:id="@+id/circleViewAttention"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:textAlignment="center"
+                        app:cpv_autoTextSize="false"
+                        app:cpv_barColor="#de5a5a"
+                        app:cpv_barWidth="20dp"
+                        app:cpv_blockCount="64"
+                        app:cpv_blockScale="0.7"
+                        app:cpv_innerContourSize="0dp"
+                        app:cpv_maxValue="100"
+                        app:cpv_outerContourSize="0dp"
+                        app:cpv_rimColor="#de5a5a"
+                        app:cpv_rimWidth="0dp"
+                        app:cpv_seekMode="true"
+                        app:cpv_showTextInSpinningMode="true"
+                        app:cpv_showUnit="false"
+                        app:cpv_spinColor="#ffffff"
+                        app:cpv_textScale="1"
+                        app:cpv_textSize="50dp"
+                        app:cpv_value="0" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/medTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/attText"
+                        android:layout_centerHorizontal="true"
+                        android:text="Meditation:" />
+
+                    <TextView
+                        android:id="@+id/medText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/medTitle"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/medTitle"
+                        android:text="--" />
+
+                    <at.grabner.circleprogress.CircleProgressView
+                        android:id="@+id/circleViewMediation"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:textAlignment="center"
+                        app:cpv_autoTextSize="false"
+                        app:cpv_barColor="#de5a5a"
+                        app:cpv_barWidth="20dp"
+                        app:cpv_blockCount="64"
+                        app:cpv_blockScale="0.7"
+                        app:cpv_innerContourSize="0dp"
+                        app:cpv_maxValue="100"
+                        app:cpv_outerContourSize="0dp"
+                        app:cpv_rimColor="#de5a5a"
+                        app:cpv_rimWidth="0dp"
+                        app:cpv_seekMode="true"
+                        app:cpv_showTextInSpinningMode="true"
+                        app:cpv_showUnit="false"
+                        app:cpv_spinColor="#ffffff"
+                        app:cpv_textScale="1"
+                        app:cpv_textSize="50dp"
+                        app:cpv_value="0" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="11"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/sqTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="Signal Quality:" />
+
+
+</LinearLayout>
