@@ -61,16 +61,20 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:visibility="gone">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Brainwave Spectrum"/>
+                        android:text="Brainwave Spectrum" />
+
                     <org.eazegraph.lib.charts.BarChart
                         android:id="@+id/barchart"
                         android:layout_width="match_parent"
@@ -181,15 +185,65 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
+
                 <TextView
+                    android:id="@+id/textViewSong"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="11"/>
-            </LinearLayout>
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="50dp"
+                    android:text="Moonlight Sonata"
+                    android:textColor="@android:color/white"
+                    android:textSize="22sp" />
+
+
+                <TextView
+                    android:id="@+id/textViewSinger"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textViewSong"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:text="Beethoven"
+                    android:textColor="#80FFFFFF"
+                    android:textSize="15sp" />
+
+
+                <!--<ImageView-->
+                    <!--android:id="@+id/next"-->
+                    <!--android:layout_width="20dp"-->
+                    <!--android:layout_height="20dp"-->
+                    <!--android:layout_alignRight="@+id/musicPlayerView"-->
+                    <!--android:layout_margijjjjnTop="50dp"-->
+                    <!--android:background="@drawable/icon_next" />-->
+
+
+                <!--<ImageView-->
+                    <!--android:id="@+id/previous"-->
+                    <!--android:layout_width="20dp"-->
+                    <!--android:layout_height="20dp"-->
+                    <!--android:layout_alignLeft="@+id/musicPlayerView"-->
+                    <!--android:layout_marginTop="50dp"-->
+                    <!--android:background="@drawable/icon_previous" />-->
+
+                <co.mobiwise.library.MusicPlayerView
+                    android:id="@+id/musicPlayerView"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@+id/textViewSinger"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="68dp"
+                    app:buttonColor="#ff0028"
+                    app:progressLoadedColor="#00815e"
+                    app:textColor="#80FFFFFF"
+                    app:textSize="14sp"
+                    app:cover = "@drawable/cover"/>
+            </RelativeLayout>
 
 
         </LinearLayout>

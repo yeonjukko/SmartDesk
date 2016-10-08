@@ -10,8 +10,8 @@ import android.content.ServiceConnection;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
@@ -42,6 +42,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import at.grabner.circleprogress.CircleProgressView;
+import co.mobiwise.library.MusicPlayerView;
 import neurosky.com.smartdesk.R;
 import neurosky.com.smartdesk.manager.ConnectManager;
 import neurosky.com.smartdesk.service.BluetoothService;
@@ -56,7 +57,7 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
 
     // COMM SDK handles
     private TgStreamReader tgStreamReader;
-    private BluetoothAdapter mBluetoothAdapter;
+    private BluetoothAdapter bluetoothAdapter;
 
     // internal variables
     private boolean bInited = false;
@@ -89,8 +90,11 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
     private BarModel bm4;
     private BarModel bm5;
 
-    private CircleProgressView mCircleProgressViewAttenion;
-    private CircleProgressView mCircleProgressViewMeditation;
+    private CircleProgressView circleProgressViewAttention;
+    private CircleProgressView circleProgressViewMeditation;
+
+    private MusicPlayerView musicPlayerView;
+    private MediaPlayer mediaPlayer;
 
     //Temp values
     private int tmpAttentionValue = 0;
@@ -137,8 +141,8 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
 
         try {
             // (1) Make sure that the device supports Bluetooth and Bluetooth is on
-            mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-            if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
+            bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+            if (bluetoothAdapter == null || !bluetoothAdapter.isEnabled()) {
                 Toast.makeText(
                         this,
                         "Please enable your Bluetooth and re-run this program !",
@@ -268,11 +272,11 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
                         attValue.setText(finalAttStr);
                         if (bRunning) {
                             if (value == 0) {
-                                //mCircleProgressViewAttenion.spin();
+                                //circleProgressViewAttention.spin();
                             } else {
-                                mCircleProgressViewAttenion.setValueAnimated(tmpAttentionValue,value,500);
-                                mCircleProgressViewAttenion.setBarColor(Color.parseColor(getAttentionColor(value)));
-                                mCircleProgressViewAttenion.setTextColor(Color.parseColor(getAttentionColor(value)));
+                                circleProgressViewAttention.setValueAnimated(tmpAttentionValue, value, 500);
+                                circleProgressViewAttention.setBarColor(Color.parseColor(getAttentionColor(value)));
+                                circleProgressViewAttention.setTextColor(Color.parseColor(getAttentionColor(value)));
                                 tmpAttentionValue = value;
 
                                 //블루투스 기기로 데이터 전송
@@ -306,11 +310,11 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
                         medValue.setText(finalMedStr);
                         if (bRunning) {
                             if (value == 0) {
-                                //mCircleProgressViewMeditation.spin();
+                                //circleProgressViewMeditation.spin();
                             } else {
-                                mCircleProgressViewMeditation.setValueAnimated(tmpMeditationValue,value,500);
-                                mCircleProgressViewMeditation.setBarColor(Color.parseColor(getMeditationColor(value)));
-                                mCircleProgressViewMeditation.setTextColor(Color.parseColor(getMeditationColor(value)));
+                                circleProgressViewMeditation.setValueAnimated(tmpMeditationValue, value, 500);
+                                circleProgressViewMeditation.setBarColor(Color.parseColor(getMeditationColor(value)));
+                                circleProgressViewMeditation.setTextColor(Color.parseColor(getMeditationColor(value)));
                                 tmpMeditationValue = value;
 
                                 //블루투스 기기로 데이터 전송
@@ -373,11 +377,10 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
         raw_data = new short[512];
         raw_data_index = 0;
 
-
         startButton.setEnabled(false);
 
         // Example of constructor public TgStreamReader(BluetoothAdapter ba, TgStreamHandler tgStreamHandler)
-        tgStreamReader = new TgStreamReader(mBluetoothAdapter, callback);
+        tgStreamReader = new TgStreamReader(bluetoothAdapter, callback);
 
         if (tgStreamReader != null && tgStreamReader.isBTConnected()) {
 
@@ -389,6 +392,10 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
         // (4) Demo of  using connect() and start() to replace connectAndStart(),
         // please call start() when the state is changed to STATE_CONNECTED
         tgStreamReader.connect();
+
+
+        mediaPlayer = MediaPlayer.create(getContext(), R.raw.moonlightsonata);
+
     }
 
     private void setLayout() {
@@ -397,8 +404,8 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
         mBarChart = (BarChart) findViewById(R.id.barchart);
         setBarChart();
 
-        mCircleProgressViewAttenion = (CircleProgressView) findViewById(R.id.circleViewAttention);
-        mCircleProgressViewMeditation = (CircleProgressView) findViewById(R.id.circleViewMediation);
+        circleProgressViewAttention = (CircleProgressView) findViewById(R.id.circleViewAttention);
+        circleProgressViewMeditation = (CircleProgressView) findViewById(R.id.circleViewMediation);
 
         startButton = (Button) this.findViewById(R.id.startButton);
         stopButton = (Button) this.findViewById(R.id.stopButton);
@@ -409,18 +416,23 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
         attValue = (TextView) this.findViewById(R.id.attText);
         medValue = (TextView) this.findViewById(R.id.medText);
 
+        musicPlayerView = (MusicPlayerView) findViewById(R.id.musicPlayerView);
+        musicPlayerView.setCoverURL("http://upload.wikimedia.org/wikipedia/commons/6/");
+        musicPlayerView.setOnClickListener(this);
+        musicPlayerView.setMax(320);
+
 
         sqText = (TextView) this.findViewById(R.id.sqText);
     }
 
     private void spinCircleProgressView() {
-        mCircleProgressViewAttenion.spin();
-        mCircleProgressViewMeditation.spin();
+        circleProgressViewAttention.spin();
+        circleProgressViewMeditation.spin();
     }
 
     private void stopSpinCircleProgressView() {
-        mCircleProgressViewAttenion.stopSpinning();
-        mCircleProgressViewMeditation.stopSpinning();
+        circleProgressViewAttention.stopSpinning();
+        circleProgressViewMeditation.stopSpinning();
     }
 
     private void setBarChart() {
@@ -671,11 +683,28 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
                 nskAlgoSdk.NskAlgoStop();
                 bRunning = false;
                 stopSpinCircleProgressView();
-                mCircleProgressViewAttenion.setValue(0f);
-                mCircleProgressViewMeditation.setValue(0f);
+                circleProgressViewAttention.setValue(0f);
+                circleProgressViewMeditation.setValue(0f);
                 break;
+
+            case R.id.musicPlayerView:
+                if (musicPlayerView.isRotating()) {
+                    musicPlayerView.stop();
+                    mediaPlayer.pause();
+                } else {
+                    musicPlayerView.start();
+
+                    mediaPlayer.start();
+                }
+
         }
     }
 
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mediaPlayer.stop();
+        mediaPlayer.release();
+        finish();
+    }
 }

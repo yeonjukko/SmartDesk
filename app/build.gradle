@@ -35,6 +35,7 @@ dependencies {
     compile 'com.balysv:material-ripple:1.0.2'
     compile 'com.larswerkman:HoloColorPicker:1.5'
     compile 'com.github.dmytrodanylyk.circular-progress-button:library:1.1.3'
+    compile 'com.github.iammert:MusicPlayerView:e3b937c729'
     compile files('libs/androidplot-core-0.6.1.jar')
     compile files('libs/NskAlgoSdk.jar')
 
