@@ -52,9 +52,9 @@ public class SmartLedActivity extends SmartDeskActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_smart_led);
+        setContentView(R.layout.activity_smart_led);
         //휴대폰 환경으로 테스트시 아래 주석 해제
-        setContentView(R.layout.activity_smart_led2);
+        //setContentView(R.layout.activity_smart_led2);
         regReceiver();
         bindService(new Intent(getContext(), BluetoothService.class), connection, Context.BIND_AUTO_CREATE);
         setLayout();
@@ -157,12 +157,12 @@ public class SmartLedActivity extends SmartDeskActivity implements View.OnClickL
                 }
                 break;
             case R.id.layout_brainwave:
-
-                if(ConnectManager.getInstance(getContext()).isConnected()){
+            //test 용 주석
+               // if(ConnectManager.getInstance(getContext()).isConnected()){
                     startActivity(new Intent(getContext(),BrainWaveActivity.class));
-                }else{
+                //}else{
                     Toast.makeText(getContext(),"Please connect bluetooth first.",Toast.LENGTH_SHORT).show();
-                }
+                //}
                 break;
             case R.id.bt_setting:
                 startActivityForResult(new Intent(getContext(), RegDeviceActivity.class), RESULT_REG_DEVICE);

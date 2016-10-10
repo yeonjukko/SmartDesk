@@ -43,10 +43,10 @@ public class SmartDeskMainActivity extends SmartDeskActivity implements View.OnC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main);
         //휴대폰 환경으로 테스트시 아래 주석 해제
 
-        setContentView(R.layout.activity_main2);
+        //setContentView(R.layout.activity_main2);
         buttonConnect = (CircularProgressButton) findViewById(R.id.bt_connect);
         buttonSetting = (ImageView) findViewById(R.id.bt_setting);
 

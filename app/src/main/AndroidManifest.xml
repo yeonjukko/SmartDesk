@@ -12,18 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:label="Desk Control"
             android:name=".activity.SmartDeskMainActivity"
+            android:label="Desk Control"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.AppCompat.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity
-            android:label="LED Control"
             android:name=".activity.SmartLedActivity"
+            android:label="LED Control"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,11 +33,10 @@
             android:name=".activity.RegDeviceActivity"
             android:label="Register Device"
             android:theme="@style/NoAciontBarDialog" />
-
-        <activity android:name=".activity.BrainWaveActivity"
+        <activity
+            android:name=".activity.BrainWaveActivity"
             android:label="Brainwave Control 1"
-            android:screenOrientation="landscape">
-        </activity>
+            android:screenOrientation="landscape"></activity>
 
         <receiver
             android:name=".WidgetProvider"
@@ -62,7 +58,13 @@
             android:enabled="true"
             android:exported="true" />
 
+        <activity android:name=".activity.TestActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
