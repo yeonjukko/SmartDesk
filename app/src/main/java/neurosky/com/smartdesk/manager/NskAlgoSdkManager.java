@@ -49,7 +49,7 @@ public class NskAlgoSdkManager {
         algoTypes += NskAlgoType.NSK_ALGO_TYPE_BP.value;
         nskAlgoSdk.NskAlgoInit(algoTypes, context.getFilesDir().getAbsolutePath());
         tgStreamReader = new TgStreamReader(BluetoothAdapter.getDefaultAdapter(), callback);
-        tgStreamReader.connect();
+        tgStreamReader.connectAndStart();
 
         nskAlgoSdk.setOnSignalQualityListener(new NskAlgoSdk.OnSignalQualityListener() {
             @Override

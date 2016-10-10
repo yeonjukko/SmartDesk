@@ -15,6 +15,7 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
     private NskAlgoSdkManager nskAlgoSdkManager;
 
     private TextView sqText;
+    private int notDetectedCount = 30;
 
     private BarChart mBarChart;
     private BarModel bm1;
@@ -44,6 +46,9 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
 
     private CircleProgressView circleProgressViewAttention;
     private CircleProgressView circleProgressViewMeditation;
+
+    private LinearLayout linearLayoutLeftTime;
+    private TextView textViewLeftTime;
 
     private MusicPlayerView musicPlayerView;
     private MediaPlayer mediaPlayer;
@@ -68,7 +73,12 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_brainwave);
+
+        setContentView(R.layout.activity_brainwave2);
+
+        //모바일 작업 시 주석 제거
+        //setContentView(R.layout.activity_brainwave);
+
         setLayout();
         setNskAlgoSdk();
         bindService(new Intent(getContext(), BluetoothService.class), connection, Context.BIND_AUTO_CREATE);
@@ -101,6 +111,8 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
         musicPlayerView.setOnClickListener(this);
         musicPlayerView.setMax(320);
 
+        linearLayoutLeftTime = (LinearLayout) findViewById(R.id.linearLayoutLeftTime);
+        textViewLeftTime = (TextView) findViewById(R.id.textViewLeftCount);
 
         sqText = (TextView) this.findViewById(R.id.sqText);
     }
@@ -113,6 +125,8 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
     private void stopSpinCircleProgressView() {
         circleProgressViewAttention.stopSpinning();
         circleProgressViewMeditation.stopSpinning();
+
+
     }
 
     private void setBarChart() {
@@ -231,15 +245,37 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
                 switch (level) {
                     case NskAlgoSdkListener.CONNECTION_QUALITY_GOOD:
                         sqText.setText("GOOD");
+                        linearLayoutLeftTime.setVisibility(View.GONE);
+                        notDetectedCount = 10;
                         break;
                     case NskAlgoSdkListener.CONNECTION_QUALITY_MEDIUM:
                         sqText.setText("MEDIUM");
+                        linearLayoutLeftTime.setVisibility(View.GONE);
+                        notDetectedCount = 10;
                         break;
                     case NskAlgoSdkListener.CONNECTION_QUALITY_NOT_DETECTED:
                         sqText.setText("NOT DETECTED");
+                        notDetectedCount--;
+
+                        if (notDetectedCount == 0) {
+                            linearLayoutLeftTime.setVisibility(View.VISIBLE);
+                            nskAlgoSdkManager.init();
+                            spinCircleProgressView();
+                            notDetectedCount = 60;
+                        } else if (notDetectedCount <= 30) {
+                            linearLayoutLeftTime.setVisibility(View.VISIBLE);
+                        } else if (notDetectedCount > 30) {
+                            linearLayoutLeftTime.setVisibility(View.GONE);
+                        }
+
+                        textViewLeftTime.setText(notDetectedCount + "초 후에 다시 검색합니다");
+
+
                         break;
                     case NskAlgoSdkListener.CONNECTION_QUALITY_POOR:
                         sqText.setText("POOR");
+                        linearLayoutLeftTime.setVisibility(View.GONE);
+                        notDetectedCount = 10;
                         break;
                 }
             }

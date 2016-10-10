@@ -11,28 +11,129 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".activity.BrainWaveActivity">
 
-    <ScrollView
+
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_weight="1.3"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:gravity="center"
+                    android:text="Brainwave Spectrum"
+                    android:textSize="40dp" />
+
+                <org.eazegraph.lib.charts.BarChart
+                    android:id="@+id/barchart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="30dp"
+                    app:egBarWidth="50dp"
+                    app:egFixedBarWidth="true"
+                    app:egLegendHeight="0dp"
+                    app:egShowDecimal="false" />
+            </LinearLayout>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_weight="1"
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/sqText"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/attTitle"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10px"
-                    android:layout_toRightOf="@+id/sqTitle"
-                    android:text="--" />
+                    android:layout_marginTop="30dp"
+                    android:gravity="center"
+                    android:text="Attention Mode"
+                    android:textSize="40dp" />
+
+                <at.grabner.circleprogress.CircleProgressView
+                    android:id="@+id/circleViewAttention"
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"
+                    app:cpv_autoTextSize="false"
+                    app:cpv_barColor="#de5a5a"
+                    app:cpv_barWidth="30dp"
+                    app:cpv_blockCount="64"
+                    app:cpv_blockScale="0.7"
+                    app:cpv_innerContourSize="0dp"
+                    app:cpv_maxValue="100"
+                    app:cpv_outerContourSize="0dp"
+                    app:cpv_rimColor="#de5a5a"
+                    app:cpv_rimWidth="0dp"
+                    app:cpv_seekMode="true"
+                    app:cpv_showTextInSpinningMode="true"
+                    app:cpv_showUnit="false"
+                    app:cpv_spinColor="#ffffff"
+                    app:cpv_textScale="1"
+                    app:cpv_textSize="100dp"
+                    app:cpv_value="0" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/medTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:gravity="center"
+                    android:text="Meditation Mode"
+                    android:textSize="40dp" />
+
+                <at.grabner.circleprogress.CircleProgressView
+                    android:padding="10dp"
+                    android:id="@+id/circleViewMediation"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"
+                    app:cpv_autoTextSize="false"
+                    app:cpv_barColor="#de5a5a"
+                    app:cpv_barWidth="30dp"
+                    app:cpv_blockCount="64"
+                    app:cpv_blockScale="0.7"
+                    app:cpv_innerContourSize="0dp"
+                    app:cpv_maxValue="100"
+                    app:cpv_outerContourSize="0dp"
+                    app:cpv_rimColor="#de5a5a"
+                    app:cpv_rimWidth="0dp"
+                    app:cpv_seekMode="true"
+                    app:cpv_showTextInSpinningMode="true"
+                    app:cpv_showUnit="false"
+                    app:cpv_spinColor="#ffffff"
+                    app:cpv_textScale="1"
+                    app:cpv_textSize="100dp"
+                    app:cpv_value="0" />
 
 
 
@@ -40,139 +141,74 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Brainwave Spectrum" />
-
-                    <org.eazegraph.lib.charts.BarChart
-                        android:id="@+id/barchart"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="10dp"
-                        app:egBarWidth="20dp"
-                        app:egFixedBarWidth="true"
-                        app:egLegendHeight="0dp"
-                        app:egShowDecimal="true" />
-                </LinearLayout>
-
-
-                <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:layout_marginTop="30dp"
+                    android:gravity="center"
+                    android:text="Signal Quality"
+                    android:textSize="40dp" />
 
-                    <TextView
-                        android:id="@+id/attTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_below="@+id/setAlgosButton"
-                        android:text="Attention:" />
 
-                    <TextView
-                        android:id="@+id/attText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/attTitle"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toEndOf="@+id/startButton"
-                        android:layout_toRightOf="@+id/attTitle"
-                        android:text="--" />
-
-                    <at.grabner.circleprogress.CircleProgressView
-                        android:id="@+id/circleViewAttention"
-                        android:layout_width="match_parent"
-                        android:layout_height="150dp"
-                        android:textAlignment="center"
-                        app:cpv_autoTextSize="false"
-                        app:cpv_barColor="#de5a5a"
-                        app:cpv_barWidth="20dp"
-                        app:cpv_blockCount="64"
-                        app:cpv_blockScale="0.7"
-                        app:cpv_innerContourSize="0dp"
-                        app:cpv_maxValue="100"
-                        app:cpv_outerContourSize="0dp"
-                        app:cpv_rimColor="#de5a5a"
-                        app:cpv_rimWidth="0dp"
-                        app:cpv_seekMode="true"
-                        app:cpv_showTextInSpinningMode="true"
-                        app:cpv_showUnit="false"
-                        app:cpv_spinColor="#ffffff"
-                        app:cpv_textScale="1"
-                        app:cpv_textSize="50dp"
-                        app:cpv_value="0" />
-                </LinearLayout>
+                <TextView
+                    android:layout_gravity="center"
+                    android:id="@+id/sqText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="--"
+                    android:textSize="70dp"/>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:id="@+id/linearLayoutLeftTime"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
+                    android:visibility="gone"
+                    android:orientation="horizontal">
                     <TextView
-                        android:id="@+id/medTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignTop="@+id/attText"
-                        android:layout_centerHorizontal="true"
-                        android:text="Meditation:" />
-
-                    <TextView
-                        android:id="@+id/medText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/medTitle"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/medTitle"
-                        android:text="--" />
-
-                    <at.grabner.circleprogress.CircleProgressView
-                        android:id="@+id/circleViewMediation"
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
-                        android:textAlignment="center"
-                        app:cpv_autoTextSize="false"
-                        app:cpv_barColor="#de5a5a"
-                        app:cpv_barWidth="20dp"
-                        app:cpv_blockCount="64"
-                        app:cpv_blockScale="0.7"
-                        app:cpv_innerContourSize="0dp"
-                        app:cpv_maxValue="100"
-                        app:cpv_outerContourSize="0dp"
-                        app:cpv_rimColor="#de5a5a"
-                        app:cpv_rimWidth="0dp"
-                        app:cpv_seekMode="true"
-                        app:cpv_showTextInSpinningMode="true"
-                        app:cpv_showUnit="false"
-                        app:cpv_spinColor="#ffffff"
-                        app:cpv_textScale="1"
-                        app:cpv_textSize="50dp"
-                        app:cpv_value="0" />
+                        android:id="@+id/textViewLeftCount"/>
 
                 </LinearLayout>
+
+
+
             </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1.4">
+
+                <TextView
+                    android:id="@+id/textViewMusicTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="30dp"
+                    android:gravity="center"
+                    android:text="Control w/ Music &amp; Light"
+                    android:textSize="40dp" />
 
                 <TextView
                     android:id="@+id/textViewSong"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/textViewMusicTitle"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="50dp"
                     android:text="Moonlight Sonata"
@@ -193,48 +229,254 @@
 
 
                 <!--<ImageView-->
-                    <!--android:id="@+id/next"-->
-                    <!--android:layout_width="20dp"-->
-                    <!--android:layout_height="20dp"-->
-                    <!--android:layout_alignRight="@+id/musicPlayerView"-->
-                    <!--android:layout_margijjjjnTop="50dp"-->
-                    <!--android:background="@drawable/icon_next" />-->
+                <!--android:id="@+id/next"-->
+                <!--android:layout_width="20dp"-->
+                <!--android:layout_height="20dp"-->
+                <!--android:layout_alignRight="@+id/musicPlayerView"-->
+                <!--android:layout_margijjjjnTop="50dp"-->
+                <!--android:background="@drawable/icon_next" />-->
 
 
                 <!--<ImageView-->
-                    <!--android:id="@+id/previous"-->
-                    <!--android:layout_width="20dp"-->
-                    <!--android:layout_height="20dp"-->
-                    <!--android:layout_alignLeft="@+id/musicPlayerView"-->
-                    <!--android:layout_marginTop="50dp"-->
-                    <!--android:background="@drawable/icon_previous" />-->
+                <!--android:id="@+id/previous"-->
+                <!--android:layout_width="20dp"-->
+                <!--android:layout_height="20dp"-->
+                <!--android:layout_alignLeft="@+id/musicPlayerView"-->
+                <!--android:layout_marginTop="50dp"-->
+                <!--android:background="@drawable/icon_previous" />-->
 
                 <co.mobiwise.library.MusicPlayerView
                     android:id="@+id/musicPlayerView"
-                    android:layout_width="250dp"
-                    android:layout_height="250dp"
-                    android:layout_alignParentBottom="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_below="@+id/textViewSinger"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="68dp"
+                    android:layout_marginLeft="200dp"
                     app:buttonColor="#ff0028"
+                    app:cover="@drawable/cover"
                     app:progressLoadedColor="#00815e"
                     app:textColor="#80FFFFFF"
-                    app:textSize="14sp"
-                    app:cover = "@drawable/cover"/>
+                    app:textSize="14sp" />
+
+
             </RelativeLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textViewTheraphyTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:gravity="center"
+                    android:text="Therapy Mode"
+                    android:textSize="40dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_weight="1">
+                        <com.balysv.materialripple.MaterialRippleLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:mrl_rippleOverlay="true">
+
+                            <LinearLayout
+                                android:id="@+id/layout_mood"
+                                android:layout_width="200dp"
+                                android:layout_height="200dp"
+                                android:background="#61c9e6"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="80dp"
+                                    android:layout_height="80dp"
+                                    android:src="@drawable/ic_study"
+                                    android:id="@+id/imageView" />
+
+
+                            </LinearLayout>
+
+                        </com.balysv.materialripple.MaterialRippleLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:layout_marginTop="20dp"
+                            android:textSize="18dp"
+                            android:gravity="center"
+                            android:text="높은 집중력이 요구될 때 \n(6,000 ~ 7,000k)"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:textSize="18dp"
+                            android:gravity="center"
+                            android:text="주의력과 고도의 집중력에\n적합한 색온도"/>
+
+
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:layout_weight="1">
+                        <com.balysv.materialripple.MaterialRippleLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:mrl_rippleOverlay="true">
+
+                            <LinearLayout
+                                android:id="@+id/layout_study"
+                                android:layout_width="200dp"
+                                android:layout_height="200dp"
+                                android:background="#8ecf58"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="80dp"
+                                    android:layout_height="80dp"
+                                    android:src="@drawable/ic_study" />
+
+
+                            </LinearLayout>
+                        </com.balysv.materialripple.MaterialRippleLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:layout_marginTop="20dp"
+                            android:textSize="18dp"
+                            android:gravity="center"
+                            android:text="오랜 집중력이 요구될 때 \n(4,300 ~ 5,300k)"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:textSize="18dp"
+                            android:gravity="center"
+                            android:text="장시간 집중력에\n적합한 색온도"/>
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:layout_weight="1">
+                        <com.balysv.materialripple.MaterialRippleLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:mrl_rippleOverlay="true">
+
+                            <LinearLayout
+                                android:id="@+id/layout_relax"
+                                android:layout_width="200dp"
+                                android:layout_height="200dp"
+                                android:background="#f1b80f"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="80dp"
+                                    android:src="@drawable/ic_relax" />
+
+                            </LinearLayout>
+
+                        </com.balysv.materialripple.MaterialRippleLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:layout_marginTop="20dp"
+                            android:textSize="18dp"
+                            android:gravity="center"
+                            android:text="휴식이 필요할 때 \n(2,500 ~ 3,300k)"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:textSize="18dp"
+                            android:gravity="center"
+                            android:text="안정감있는 휴식 등에\n적합한 색온도"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:layout_weight="1">
+                        <com.balysv.materialripple.MaterialRippleLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:mrl_rippleOverlay="true">
+
+                            <LinearLayout
+                                android:id="@+id/layout_brainwave"
+                                android:layout_width="200dp"
+                                android:layout_height="200dp"
+                                android:background="#ed5d7c"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="80dp"
+                                    android:layout_height="80dp"
+                                    android:src="@drawable/ic_brain" />
+
+
+                            </LinearLayout>
+                        </com.balysv.materialripple.MaterialRippleLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:layout_marginTop="20dp"
+                            android:textSize="18dp"
+                            android:gravity="center"
+                            android:text="숙면을 취할 때 \n(2,500 ~ 3,300k)"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:textSize="18dp"
+                            android:gravity="center"
+                            android:text="심신의 안정과 숙면에\n적합한 색온도"/>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
 
         </LinearLayout>
-    </ScrollView>
 
-    <TextView
-        android:id="@+id/sqTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:text="Signal Quality:" />
+
+    </LinearLayout>
 
 
 </LinearLayout>
