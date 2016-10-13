@@ -4,7 +4,7 @@ package neurosky.com.smartdesk.manager;
  * Created by yeonjukko on 2016. 10. 9..
  */
 
-public interface NskAlgoSdkListener {
+ public interface NskAlgoSdkListener {
     public static final int STATE_CONNECTING = 1;
     public static final int STATE_CONNECTED = 2;
     public static final int STATE_STOPPED = 3;
