@@ -31,6 +31,17 @@ import neurosky.com.smartdesk.manager.NskAlgoSdkManager;
 import neurosky.com.smartdesk.service.BluetoothService;
 
 public class BrainWaveActivity extends SmartDeskActivity implements View.OnClickListener, NskAlgoSdkListener {
+    private static String CURRENT_MODE = "원하는 모드를 선택하세요.";
+    private static final String THERAPY_STUDY_MODE = "THERAPY MODE (STUDY)";
+    private static final String THERAPY_ATTENTION_MODE = "THERAPY MODE (ATTENTION)";
+    private static final String THERAPY_SLEEP_MODE = "THERAPY MODE (SLEEP)";
+    private static final String THERAPY_RELAX_MODE = "THERAPY MODE (RELAX)";
+    private static final String THERAPY_HAPPY_MODE = "THERAPY MODE (HAPPY)";
+    private static final String THERAPY_DEPRESSION_MODE = "THERAPY MODE (DEPRESSION)";
+    private static final String MUSIC_MODE = "CLASSIC MUSIC MODE";
+    private static final String ATTENTION_MODE = "ATTENTION MODE";
+    private static final String MEDITATION_MODE = "MEDITATION MODE";
+
 
     private NskAlgoSdkManager nskAlgoSdkManager;
 
@@ -49,6 +60,7 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
 
     private LinearLayout linearLayoutLeftTime;
     private TextView textViewLeftTime;
+    private TextView textViewCurrentMode;
 
     private MusicPlayerView musicPlayerView;
     private MediaPlayer mediaPlayer;
@@ -56,6 +68,7 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
     //Temp values
     private int tmpAttentionValue = 0;
     private int tmpMeditationValue = 0;
+
 
     //Service Connecttion
     private Messenger messenger;
@@ -74,10 +87,11 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_brainwave2);
+//        setContentView(R.layout.activity_brainwave);
+
 
         //모바일 작업 시 주석 제거
-        //setContentView(R.layout.activity_brainwave);
+        setContentView(R.layout.activity_brainwave2);
 
         setLayout();
         setNskAlgoSdk();
@@ -104,7 +118,7 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
         setBarChart();
 
         circleProgressViewAttention = (CircleProgressView) findViewById(R.id.circleViewAttention);
-        circleProgressViewMeditation = (CircleProgressView) findViewById(R.id.circleViewMediation);
+        circleProgressViewMeditation = (CircleProgressView) findViewById(R.id.circleViewMeditation);
 
         musicPlayerView = (MusicPlayerView) findViewById(R.id.musicPlayerView);
         musicPlayerView.setCoverURL("http://upload.wikimedia.org/wikipedia/commons/6/");
@@ -113,28 +127,55 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
 
         linearLayoutLeftTime = (LinearLayout) findViewById(R.id.linearLayoutLeftTime);
         textViewLeftTime = (TextView) findViewById(R.id.textViewLeftCount);
+        textViewCurrentMode = (TextView) findViewById(R.id.textViewCurrentMode);
+        textViewCurrentMode.setText(CURRENT_MODE);
+
+        //Therapy Mode
+        LinearLayout linearLayoutAttention = (LinearLayout) findViewById(R.id.layout_attention);
+        linearLayoutAttention.setOnClickListener(this);
+        LinearLayout linearLayoutHappy = (LinearLayout) findViewById(R.id.layout_happy);
+        linearLayoutHappy.setOnClickListener(this);
+        LinearLayout linearLayoutSleep = (LinearLayout) findViewById(R.id.layout_sleep);
+        linearLayoutSleep.setOnClickListener(this);
+        LinearLayout linearLayoutRelax = (LinearLayout) findViewById(R.id.layout_relax);
+        linearLayoutRelax.setOnClickListener(this);
+        LinearLayout linearLayoutDepression = (LinearLayout) findViewById(R.id.layout_depression);
+        linearLayoutDepression.setOnClickListener(this);
+        LinearLayout linearLayoutStudy = (LinearLayout) findViewById(R.id.layout_study);
+        linearLayoutStudy.setOnClickListener(this);
+
+        //Attention, Meditation Mode
+        View viewAttentionMode = findViewById(R.id.viewAttentionMode);
+        viewAttentionMode.setOnClickListener(this);
+        View viewMeditationMode = findViewById(R.id.viewMediationMode);
+        viewMeditationMode.setOnClickListener(this);
 
         sqText = (TextView) this.findViewById(R.id.sqText);
+
     }
 
     private void spinCircleProgressView() {
-        circleProgressViewAttention.spin();
-        circleProgressViewMeditation.spin();
+        if (circleProgressViewAttention != null && circleProgressViewMeditation != null) {
+            circleProgressViewAttention.spin();
+            circleProgressViewMeditation.spin();
+        }
     }
 
     private void stopSpinCircleProgressView() {
-        circleProgressViewAttention.stopSpinning();
-        circleProgressViewMeditation.stopSpinning();
-
-
+        if (circleProgressViewAttention != null && circleProgressViewMeditation != null) {
+            circleProgressViewAttention.stopSpinning();
+            circleProgressViewMeditation.stopSpinning();
+        }
     }
 
     private void setBarChart() {
         bm1 = new BarModel(1f, 0xFFF15A5A);
-        bm2 = new BarModel(2f, 0xFFF0C419);
-        bm3 = new BarModel(3f, 0xFF4EBA6F);
-        bm4 = new BarModel(0f, 0xFF2D95BF);
-        bm5 = new BarModel(0f, 0xFF955BA5);
+        bm2 = new BarModel(1f, 0xFFF0C419);
+        bm3 = new BarModel(1f, 0xFF4EBA6F);
+        bm4 = new BarModel(1f, 0xFF2D95BF);
+        bm5 = new BarModel(1f, 0xFF955BA5);
+
+        mBarChart.setShowValues(false);
         mBarChart.addBar(bm1);
         mBarChart.addBar(bm2);
         mBarChart.addBar(bm3);
@@ -176,7 +217,6 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
         return color;
     }
 
-
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -189,23 +229,70 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
         mBarChart.startAnimation();
     }
 
-
     @Override
     public void onClick(View v) {
+        Message msg = Message.obtain(null, BluetoothService.SEND_DATA, 0, 0);
+        Bundle bundle = new Bundle();
+
         switch (v.getId()) {
-
-
             case R.id.musicPlayerView:
+                CURRENT_MODE = MUSIC_MODE;
+                textViewCurrentMode.setText(MUSIC_MODE);
                 if (musicPlayerView.isRotating()) {
                     musicPlayerView.stop();
                     mediaPlayer.pause();
                 } else {
                     musicPlayerView.start();
-
                     mediaPlayer.start();
                 }
+                break;
+            case R.id.layout_attention:
+                CURRENT_MODE = THERAPY_ATTENTION_MODE;
+                textViewCurrentMode.setText(THERAPY_ATTENTION_MODE);
+                bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_LED_ATTENTION_MODE);
+                break;
+            case R.id.layout_study:
+                textViewCurrentMode.setText(THERAPY_STUDY_MODE);
+                CURRENT_MODE = THERAPY_STUDY_MODE;
+                bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_LED_STUDY_MODE);
+                break;
+            case R.id.layout_relax:
+                CURRENT_MODE = THERAPY_RELAX_MODE;
+                textViewCurrentMode.setText(THERAPY_RELAX_MODE);
+                bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_LED_RELAX_MODE);
+                break;
+            case R.id.layout_happy:
+                CURRENT_MODE = THERAPY_HAPPY_MODE;
+                textViewCurrentMode.setText(THERAPY_HAPPY_MODE);
+                bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_LED_HAPPY_MODE);
+                break;
+            case R.id.layout_depression:
+                CURRENT_MODE = THERAPY_DEPRESSION_MODE;
+                textViewCurrentMode.setText(THERAPY_DEPRESSION_MODE);
+                bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_LED_DEPRESSION_MODE);
+                break;
+            case R.id.layout_sleep:
+                CURRENT_MODE = THERAPY_SLEEP_MODE;
+                textViewCurrentMode.setText(THERAPY_SLEEP_MODE);
+                bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_LED_SLEEP_MODE);
+                break;
+            case R.id.viewAttentionMode:
+                CURRENT_MODE = ATTENTION_MODE;
+                textViewCurrentMode.setText(ATTENTION_MODE);
+                return;
+            case R.id.viewMediationMode:
+                CURRENT_MODE = MEDITATION_MODE;
+                textViewCurrentMode.setText(MEDITATION_MODE);
+                return;
 
         }
+        msg.setData(bundle);
+        try {
+            messenger.send(msg);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
@@ -309,22 +396,19 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                circleProgressViewAttention.setValueAnimated(tmpAttentionValue, value, 500);
-                circleProgressViewAttention.setBarColor(Color.parseColor(getAttentionColor(value)));
-                circleProgressViewAttention.setTextColor(Color.parseColor(getAttentionColor(value)));
-                tmpAttentionValue = value;
+                if (circleProgressViewAttention != null) {
+                    circleProgressViewAttention.setValueAnimated(tmpAttentionValue, value, 500);
+                    circleProgressViewAttention.setBarColor(Color.parseColor(getAttentionColor(value)));
+                    circleProgressViewAttention.setTextColor(Color.parseColor(getAttentionColor(value)));
+                    //블루투스 기기로 데이터 전송
 
-                //블루투스 기기로 데이터 전송
-//                Message msg = Message.obtain(null, BluetoothService.SEND_DATA, 0, 0);
-//                Bundle bundle = new Bundle();
-//                bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed(255, 255, 255, 0, 0));
-//                msg.setData(bundle);
-//                try {
-//                    if (messenger != null)
-//                        messenger.send(msg);
-//                } catch (RemoteException e) {
-//                    e.printStackTrace();
-//                }
+                    if (CURRENT_MODE.equals(ATTENTION_MODE)) {
+                        new SendThread(tmpAttentionValue, value).start();
+                    }
+                    tmpAttentionValue = value;
+
+
+                }
             }
         });
     }
@@ -334,23 +418,104 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                circleProgressViewMeditation.setValueAnimated(tmpMeditationValue, value, 500);
-                circleProgressViewMeditation.setBarColor(Color.parseColor(getMeditationColor(value)));
-                circleProgressViewMeditation.setTextColor(Color.parseColor(getMeditationColor(value)));
-                tmpMeditationValue = value;
+                if (circleProgressViewMeditation != null) {
+                    circleProgressViewMeditation.setValueAnimated(tmpMeditationValue, value, 500);
+                    circleProgressViewMeditation.setBarColor(Color.parseColor(getMeditationColor(value)));
+                    circleProgressViewMeditation.setTextColor(Color.parseColor(getMeditationColor(value)));
+                    //블루투스 기기로 데이터 전송
+                    if (CURRENT_MODE.equals(MEDITATION_MODE)) {
+                        new SendThread(tmpMeditationValue, value).start();
+                    }
+                    tmpMeditationValue = value;
 
-                //블루투스 기기로 데이터 전송
-//                Message msg = Message.obtain(null, BluetoothService.SEND_DATA, 0, 0);
-//                Bundle bundle = new Bundle();
-//                bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed(241, 90, 90, 0, 0));
-//                msg.setData(bundle);
-//                try {
-//                    if (messenger != null)
-//                        messenger.send(msg);
-//                } catch (RemoteException e) {
-//                    e.printStackTrace();
-//                }
+                }
             }
         });
     }
+
+    class SendThread extends Thread {
+        int startValue;
+        int endValue;
+
+        private SendThread(int startValue, int endValue) {
+            this.startValue = startValue;
+            this.endValue = endValue;
+        }
+
+        @Override
+        public void run() {
+            int firstValue=0;
+            int secondValue=0;
+            if (startValue < endValue) {
+                firstValue = startValue + (Math.abs(endValue - startValue) / 3);
+                secondValue = startValue + (Math.abs(endValue - startValue) / 3) * 2;
+            } else if (startValue > endValue) {
+                firstValue = startValue - (Math.abs(endValue - startValue) / 3);
+                secondValue = startValue - (Math.abs(endValue - startValue) / 3) * 2;
+            } else if (startValue == endValue) {
+                firstValue = startValue;
+                secondValue = startValue;
+            }
+
+
+            Message msg = Message.obtain(null, BluetoothService.SEND_DATA, 0, 0);
+            Bundle bundle = new Bundle();
+
+            if (CURRENT_MODE.equals(ATTENTION_MODE)) {
+                bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed2Attention(firstValue));
+            } else if (CURRENT_MODE.equals(MEDITATION_MODE)) {
+                bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed2Meditation(firstValue));
+            }
+            msg.setData(bundle);
+            try {
+                if (messenger != null)
+                    messenger.send(msg);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                sleep(333);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            msg = Message.obtain(null, BluetoothService.SEND_DATA, 0, 0);
+            bundle = new Bundle();
+            if (CURRENT_MODE.equals(ATTENTION_MODE)) {
+                bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed2Attention(secondValue));
+            } else if (CURRENT_MODE.equals(MEDITATION_MODE)) {
+                bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed2Meditation(secondValue));
+            }
+            msg.setData(bundle);
+            try {
+                if (messenger != null)
+                    messenger.send(msg);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+            try {
+                sleep(333);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            msg = Message.obtain(null, BluetoothService.SEND_DATA, 0, 0);
+            bundle = new Bundle();
+
+            if (CURRENT_MODE.equals(ATTENTION_MODE)) {
+                bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed2Attention(endValue));
+            } else if (CURRENT_MODE.equals(MEDITATION_MODE)) {
+                bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed2Meditation(endValue));
+            }
+            msg.setData(bundle);
+            try {
+                if (messenger != null)
+                    messenger.send(msg);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+    }
+
 }
