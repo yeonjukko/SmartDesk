@@ -38,6 +38,10 @@ public class NskAlgoSdkManager {
         this.nskAlgoSdkListener = nskAlgoSdkListener;
     }
 
+    public void finish(){
+        nskAlgoSdk.NskAlgoStop();
+        tgStreamReader.close();
+    }
 
 
     public void init() {

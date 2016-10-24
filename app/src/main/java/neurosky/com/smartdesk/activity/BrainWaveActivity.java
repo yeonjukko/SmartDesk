@@ -92,7 +92,7 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
         setContentView(R.layout.activity_brainwave);
 
         //모바일 작업 시 주석 제거
-        //setContentView(R.layout.activity_brainwave2);
+        setContentView(R.layout.activity_brainwave2);
 
         setLayout();
         setNskAlgoSdk();
@@ -311,7 +311,7 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
         super.onPause();
         mediaPlayer.stop();
         mediaPlayer.release();
-        NskAlgoSdk.NskAlgoStop();
+        nskAlgoSdkManager.finish();
         finish();
     }
 
