@@ -355,45 +355,45 @@ public class ConnectManager {
 
     public static String getCmdChangeLed2Meditation(int value) {
         if (value < 5) {                                //red
-            return getCmdChangeLed(255, 0, 0, 255, 255);
+            return getCmdChangeLed(255, 0, 0, 0, 0);
         } else if (value < 10) {
-            return getCmdChangeLed(255, 30, 0, 255, 255);
+            return getCmdChangeLed(255, 30, 0, 0, 0);
         } else if (value < 15) {
-            return getCmdChangeLed(255, 60, 0, 255, 255);
+            return getCmdChangeLed(255, 60, 0, 0, 0);
         } else if (value < 20) {                        //orange
-            return getCmdChangeLed(255, 90, 0, 255, 255);
+            return getCmdChangeLed(255, 90, 0, 0, 0);
         } else if (value < 25) {
-            return getCmdChangeLed(255, 120, 0, 255, 255);
+            return getCmdChangeLed(255, 120, 0, 0, 0);
         } else if (value < 30) {
-            return getCmdChangeLed(255, 150, 0, 255, 255);
+            return getCmdChangeLed(255, 150, 0, 0, 0);
         } else if (value < 35) {                        //yellow
-            return getCmdChangeLed(255, 180, 0, 255, 255);
+            return getCmdChangeLed(255, 180, 0, 0, 0);
         } else if (value < 40) {
-            return getCmdChangeLed(255, 210, 0, 255, 255);
+            return getCmdChangeLed(255, 210, 0, 0, 0);
         } else if (value < 45) {
-            return getCmdChangeLed(255, 240, 0, 255, 255);
+            return getCmdChangeLed(255, 240, 0, 0, 0);
         } else if (value < 50) {                        //green
-            return getCmdChangeLed(180, 255, 0, 255, 255);
+            return getCmdChangeLed(180, 255, 0, 0, 0);
         } else if (value < 55) {
-            return getCmdChangeLed(120, 255, 0, 255, 255);
+            return getCmdChangeLed(120, 255, 0, 0, 0);
         } else if (value < 60) {
-            return getCmdChangeLed(60, 255, 0, 255, 255);
+            return getCmdChangeLed(60, 255, 0, 0, 0);
         } else if (value < 65) {                        //blue
-            return getCmdChangeLed(0, 230, 255, 255, 255);
+            return getCmdChangeLed(0, 230, 255, 0, 0);
         } else if (value < 70) {
-            return getCmdChangeLed(0, 190, 255, 255, 255);
+            return getCmdChangeLed(0, 190, 255, 0, 0);
         } else if (value < 75) {
-            return getCmdChangeLed(0, 150, 255, 255, 255);
+            return getCmdChangeLed(0, 150, 255, 0, 0);
         } else if (value < 80) {                        //dark blue
-            return getCmdChangeLed(0, 100, 255, 255, 255);
+            return getCmdChangeLed(0, 100, 255, 0, 0);
         } else if (value < 85) {
-            return getCmdChangeLed(0, 50, 255, 255, 255);
+            return getCmdChangeLed(0, 50, 255, 0, 0);
         } else if (value < 90) {
-            return getCmdChangeLed(25, 0, 255, 255, 255);
+            return getCmdChangeLed(25, 0, 255, 0, 0);
         } else if (value < 95) {                        //purple
-            return getCmdChangeLed(100, 0, 255, 255, 255);
+            return getCmdChangeLed(100, 0, 255, 0, 0);
         } else if (value <= 100) {
-            return getCmdChangeLed(150, 0, 255, 255, 255);
+            return getCmdChangeLed(150, 0, 255, 0, 0);
         }
         return null;
     }
@@ -401,45 +401,45 @@ public class ConnectManager {
     public static String getCmdChangeLed2Attention(int value) {
 
         if (value < 5) {                                 //purple
-            return getCmdChangeLed(150, 0, 255, 255, 255);
+            return getCmdChangeLed(150, 0, 255, 0, 0);
         } else if (value < 10) {
-            return getCmdChangeLed(100, 0, 255, 255, 255);
+            return getCmdChangeLed(100, 0, 255, 0, 0);
         } else if (value < 15) {                        //dark blue
-            return getCmdChangeLed(25, 0, 255, 255, 255);
+            return getCmdChangeLed(25, 0, 255, 0, 0);
         } else if (value < 20) {
-            return getCmdChangeLed(0, 50, 255, 255, 255);
+            return getCmdChangeLed(0, 50, 255, 0, 0);
         } else if (value < 25) {
-            return getCmdChangeLed(0, 100, 255, 255, 255);
+            return getCmdChangeLed(0, 100, 255, 0, 0);
         } else if (value < 30) {                         //blue
-            return getCmdChangeLed(0, 150, 255, 255, 255);
+            return getCmdChangeLed(0, 150, 255, 0, 0);
         } else if (value < 35) {
-            return getCmdChangeLed(0, 190, 255, 255, 255);
+            return getCmdChangeLed(0, 190, 255, 0, 0);
         } else if (value < 40) {
-            return getCmdChangeLed(0, 230, 255, 255, 255);
+            return getCmdChangeLed(0, 230, 255, 0, 0);
         } else if (value < 45) {//green
-            return getCmdChangeLed(60, 255, 0, 255, 255);
+            return getCmdChangeLed(60, 255, 0, 0, 0);
         } else if (value < 50) {
-            return getCmdChangeLed(120, 255, 0, 255, 255);
+            return getCmdChangeLed(120, 255, 0, 0, 0);
         } else if (value < 55) {
-            return getCmdChangeLed(180, 255, 0, 255, 255);
+            return getCmdChangeLed(180, 255, 0, 0, 0);
         } else if (value < 60) {   //yellow
-            return getCmdChangeLed(255, 240, 0, 255, 255);
+            return getCmdChangeLed(255, 240, 0, 0, 0);
         } else if (value < 65) {
-            return getCmdChangeLed(255, 210, 0, 255, 255);
+            return getCmdChangeLed(255, 210, 0, 0, 0);
         } else if (value < 70) {
-            return getCmdChangeLed(255, 180, 0, 255, 255);
+            return getCmdChangeLed(255, 180, 0, 0, 0);
         } else if (value < 75) {   //orange
-            return getCmdChangeLed(255, 150, 0, 255, 255);
+            return getCmdChangeLed(255, 150, 0, 0, 0);
         } else if (value < 80) {
-            return getCmdChangeLed(255, 120, 0, 255, 255);
+            return getCmdChangeLed(255, 120, 0, 0, 0);
         } else if (value < 85) {
-            return getCmdChangeLed(255, 90, 0, 255, 255);
+            return getCmdChangeLed(255, 90, 0, 0, 0);
         } else if (value < 90) {//red
-            return getCmdChangeLed(255, 60, 0, 255, 255);
+            return getCmdChangeLed(255, 60, 0, 0, 0);
         } else if (value < 95) {
-            return getCmdChangeLed(255, 30, 0, 255, 255);
+            return getCmdChangeLed(255, 30, 0, 0, 0);
         } else if (value <= 100) {
-            return getCmdChangeLed(255, 0, 0, 255, 255);
+            return getCmdChangeLed(255, 0, 0, 0, 0);
         }
         return null;
     }

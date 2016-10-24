@@ -54,7 +54,7 @@ public class SmartLedActivity extends SmartDeskActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_smart_led);
         //휴대폰 환경으로 테스트시 아래 주석 해제
-        setContentView(R.layout.activity_smart_led2);
+        //setContentView(R.layout.activity_smart_led2);
         regReceiver();
         bindService(new Intent(getContext(), BluetoothService.class), connection, Context.BIND_AUTO_CREATE);
         setLayout();
