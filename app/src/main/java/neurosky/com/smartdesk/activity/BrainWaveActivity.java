@@ -234,17 +234,6 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
         Bundle bundle = new Bundle();
 
         switch (v.getId()) {
-            case R.id.musicPlayerView:
-                CURRENT_MODE = MUSIC_MODE;
-                textViewCurrentMode.setText(MUSIC_MODE);
-                if (musicPlayerView.isRotating()) {
-                    musicPlayerView.stop();
-                    mediaPlayer.pause();
-                } else {
-                    musicPlayerView.start();
-                    mediaPlayer.start();
-                }
-                break;
 
             case R.id.layout_attention:
                 CURRENT_MODE = THERAPY_ATTENTION_MODE;
@@ -283,6 +272,17 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
             case R.id.viewMediationMode:
                 CURRENT_MODE = MEDITATION_MODE;
                 textViewCurrentMode.setText(MEDITATION_MODE);
+                return;
+            case R.id.musicPlayerView:
+                CURRENT_MODE = MUSIC_MODE;
+                textViewCurrentMode.setText(MUSIC_MODE);
+                if (musicPlayerView.isRotating()) {
+                    musicPlayerView.stop();
+                    mediaPlayer.pause();
+                } else {
+                    musicPlayerView.start();
+                    mediaPlayer.start();
+                }
                 return;
 
         }
