@@ -90,7 +90,7 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
         setContentView(R.layout.activity_brainwave);
 
         //모바일 작업 시 주석 제거
-        //setContentView(R.layout.activity_brainwave2);
+        setContentView(R.layout.activity_brainwave2);
 
         setLayout();
         setNskAlgoSdk();
@@ -279,10 +279,19 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
                 if (musicPlayerView.isRotating()) {
                     musicPlayerView.stop();
                     mediaPlayer.pause();
+
                 } else {
+                    if (musicPlayerView.getProgress() == 0) {
+                        mediaPlayer.seekTo(0);
+                        musicPlayerView.setProgress(0);
+                    }
+
                     musicPlayerView.start();
                     mediaPlayer.start();
+
+
                 }
+
                 return;
 
         }
@@ -355,7 +364,7 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
                             linearLayoutLeftTime.setVisibility(View.GONE);
                         }
 
-                        textViewLeftTime.setText("Research after "+notDetectedCount+"s");
+                        textViewLeftTime.setText("Research after " + notDetectedCount + "s");
 
 
                         break;
@@ -423,7 +432,7 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
                     circleProgressViewMeditation.setBarColor(Color.parseColor(getMeditationColor(value)));
                     circleProgressViewMeditation.setTextColor(Color.parseColor(getMeditationColor(value)));
                     //블루투스 기기로 데이터 전송
-                    if (CURRENT_MODE.equals(MEDITATION_MODE)||CURRENT_MODE.equals(MUSIC_MODE)) {
+                    if (CURRENT_MODE.equals(MEDITATION_MODE) || CURRENT_MODE.equals(MUSIC_MODE)) {
                         new SendThread(tmpMeditationValue, value).start();
                     }
                     tmpMeditationValue = value;
@@ -444,8 +453,8 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
 
         @Override
         public void run() {
-            int firstValue=0;
-            int secondValue=0;
+            int firstValue = 0;
+            int secondValue = 0;
             if (startValue < endValue) {
                 firstValue = startValue + (Math.abs(endValue - startValue) / 3);
                 secondValue = startValue + (Math.abs(endValue - startValue) / 3) * 2;
@@ -463,7 +472,7 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
 
             if (CURRENT_MODE.equals(ATTENTION_MODE)) {
                 bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed2Attention(firstValue));
-            } else if (CURRENT_MODE.equals(MEDITATION_MODE)||CURRENT_MODE.equals(MUSIC_MODE)) {
+            } else if (CURRENT_MODE.equals(MEDITATION_MODE) || CURRENT_MODE.equals(MUSIC_MODE)) {
                 bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed2Meditation(firstValue));
             }
             msg.setData(bundle);
@@ -483,7 +492,7 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
             bundle = new Bundle();
             if (CURRENT_MODE.equals(ATTENTION_MODE)) {
                 bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed2Attention(secondValue));
-            } else if (CURRENT_MODE.equals(MEDITATION_MODE)||CURRENT_MODE.equals(MUSIC_MODE)) {
+            } else if (CURRENT_MODE.equals(MEDITATION_MODE) || CURRENT_MODE.equals(MUSIC_MODE)) {
                 bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed2Meditation(secondValue));
             }
             msg.setData(bundle);
@@ -503,7 +512,7 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
 
             if (CURRENT_MODE.equals(ATTENTION_MODE)) {
                 bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed2Attention(endValue));
-            } else if (CURRENT_MODE.equals(MEDITATION_MODE)||CURRENT_MODE.equals(MUSIC_MODE)) {
+            } else if (CURRENT_MODE.equals(MEDITATION_MODE) || CURRENT_MODE.equals(MUSIC_MODE)) {
                 bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed2Meditation(endValue));
             }
             msg.setData(bundle);
