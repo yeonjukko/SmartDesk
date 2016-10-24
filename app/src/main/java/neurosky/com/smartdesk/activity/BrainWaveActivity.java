@@ -19,6 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.neurosky.AlgoSdk.NskAlgoSdk;
+
 import org.eazegraph.lib.charts.BarChart;
 import org.eazegraph.lib.models.BarModel;
 
@@ -31,7 +33,7 @@ import neurosky.com.smartdesk.manager.NskAlgoSdkManager;
 import neurosky.com.smartdesk.service.BluetoothService;
 
 public class BrainWaveActivity extends SmartDeskActivity implements View.OnClickListener, NskAlgoSdkListener {
-    private static String CURRENT_MODE = "원하는 모드를 선택하세요.";
+    private static String CURRENT_MODE = "Please Choice Any Mode";
     private static final String THERAPY_STUDY_MODE = "Therapy Mode (Study)";
     private static final String THERAPY_ATTENTION_MODE = "Therapy Mode (Attention)";
     private static final String THERAPY_SLEEP_MODE = "Therapy Mode (Sleep)";
@@ -309,6 +311,7 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
         super.onPause();
         mediaPlayer.stop();
         mediaPlayer.release();
+        NskAlgoSdk.NskAlgoStop();
         finish();
     }
 

@@ -38,6 +38,8 @@ public class NskAlgoSdkManager {
         this.nskAlgoSdkListener = nskAlgoSdkListener;
     }
 
+
+
     public void init() {
         raw_data = new short[512];
         raw_data_index = 0;
