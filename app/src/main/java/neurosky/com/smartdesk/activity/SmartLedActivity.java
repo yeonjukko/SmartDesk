@@ -52,9 +52,9 @@ public class SmartLedActivity extends SmartDeskActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_smart_led);
+        setContentView(R.layout.activity_smart_led);
         //휴대폰 환경으로 테스트시 아래 주석 해제
-        setContentView(R.layout.activity_smart_led2);
+        //setContentView(R.layout.activity_smart_led2);
         regReceiver();
         bindService(new Intent(getContext(), BluetoothService.class), connection, Context.BIND_AUTO_CREATE);
         setLayout();
@@ -97,6 +97,9 @@ public class SmartLedActivity extends SmartDeskActivity implements View.OnClickL
         findViewById(R.id.bt_4).setOnTouchListener(touchListener);
         findViewById(R.id.bt_9).setOnTouchListener(touchListener);
         findViewById(R.id.bt_10).setOnTouchListener(touchListener);
+        findViewById(R.id.bt_11).setOnTouchListener(touchListener);
+        findViewById(R.id.bt_12).setOnTouchListener(touchListener);
+
     }
 
     private long sendTime;
@@ -130,7 +133,7 @@ public class SmartLedActivity extends SmartDeskActivity implements View.OnClickL
                 }
                 break;
             case R.id.layout_mood:
-                bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed(23, 43, 243, 220, 0));
+                bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed(23, 43, 243, 100, 0));
                 try {
                     if (messenger != null)
                         messenger.send(msg);
@@ -148,7 +151,7 @@ public class SmartLedActivity extends SmartDeskActivity implements View.OnClickL
                 }
                 break;
             case R.id.layout_study:
-                bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed(22, 90, 200, 220, 0));
+                bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed(0, 0, 0, 220, 150));
                 try {
                     if (messenger != null)
                         messenger.send(msg);
@@ -161,7 +164,7 @@ public class SmartLedActivity extends SmartDeskActivity implements View.OnClickL
                // if(ConnectManager.getInstance(getContext()).isConnected()){
                     startActivity(new Intent(getContext(),BrainWaveActivity.class));
                 //}else{
-                    Toast.makeText(getContext(),"Please connect bluetooth first.",Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(getContext(),"Please connect bluetooth first.",Toast.LENGTH_SHORT).show();
                 //}
                 break;
             case R.id.bt_setting:
@@ -284,6 +287,13 @@ public class SmartLedActivity extends SmartDeskActivity implements View.OnClickL
                 case R.id.bt_10:
                     bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_LED_ON);
                     break;
+                case R.id.bt_11:
+                    bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_F_IR_LED_OFF);
+                    break;
+                case R.id.bt_12:
+                    bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_F_IR_LED_ON);
+                    break;
+
             }
             msg.setData(bundle);
             try {

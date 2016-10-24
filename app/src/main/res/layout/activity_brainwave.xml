@@ -59,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="현재 모드:"
+                android:text="Current Status :"
                 android:textSize="30dp" />
 
             <TextView
@@ -353,17 +353,11 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
                             android:gravity="center"
-                            android:text="오랜 집중력이 요구될 때 \n(4,300 ~ 5,300k)"
-                            android:textSize="18dp"
+                            android:text="Study"
+                            android:textSize="30dp"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:gravity="center"
-                            android:text="장시간 집중력에\n적합한 색온도"
-                            android:textSize="18dp" />
+
 
 
                     </LinearLayout>
@@ -403,17 +397,11 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
                             android:gravity="center"
-                            android:text="높은 집중력이 요구될 때 \n(6,000 ~ 7,000k)"
-                            android:textSize="18dp"
-                            android:textStyle="bold" />
+                            android:text="Attention"
+                            android:textSize="30dp"
+                            android:textStyle="bold"
+                            android:id="@+id/textView4" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:gravity="center"
-                            android:text="주의력과 고도의 집중력에\n적합한 색온도"
-                            android:textSize="18dp" />
 
                     </LinearLayout>
 
@@ -441,7 +429,7 @@
                                     android:id="@+id/imageView4"
                                     android:layout_width="80dp"
                                     android:layout_height="80dp"
-                                    android:src="@drawable/ic_relax" />
+                                    android:src="@drawable/ic_sleep" />
 
                             </LinearLayout>
 
@@ -452,17 +440,11 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
                             android:gravity="center"
-                            android:text="휴식이 필요할 때 \n(2,500 ~ 3,300k)"
-                            android:textSize="18dp"
+                            android:text="Sleep"
+                            android:textSize="30dp"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:gravity="center"
-                            android:text="안정감있는 휴식 등에\n적합한 색온도"
-                            android:textSize="18dp" />
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -488,7 +470,8 @@
                                 <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="80dp"
-                                    android:src="@drawable/ic_sleep" />
+                                    android:src="@drawable/ic_relax"
+                                    android:id="@+id/imageView5" />
 
                             </LinearLayout>
 
@@ -499,17 +482,11 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
                             android:gravity="center"
-                            android:text="숙면이 필요할 때 \n(2,500 ~ 3,300k)"
-                            android:textSize="18dp"
+                            android:text="Relax"
+                            android:textSize="30dp"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:gravity="center"
-                            android:text="심신의 안정과 숙면에\n적합한 색온도"
-                            android:textSize="18dp" />
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -548,18 +525,11 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
                             android:gravity="center"
-                            android:text="무기력 해소\n"
-                            android:textSize="18dp"
+                            android:text="Happy"
+                            android:textSize="30dp"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:gravity="center"
-                            android:text="안정감있는 휴식 등에\n적합한 색온도"
-                            android:textColor="@android:color/black"
-                            android:textSize="18dp" />
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -596,18 +566,11 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
                             android:gravity="center"
-                            android:text="우울증 해소 \n"
-                            android:textSize="18dp"
+                            android:text="Depression"
+                            android:textSize="30dp"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:gravity="center"
-                            android:text="안정감있는 휴식 등에\n적합한 색온도"
-                            android:textColor="@android:color/black"
-                            android:textSize="18dp" />
+
                     </LinearLayout>
 
 

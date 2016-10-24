@@ -35,14 +35,17 @@ public class ConnectManager {
     public static final String CMD_CENTER_TABLE_DOWN = "SM4D";
     public static final String CMD_MAIN_TABLE_UP = "SM3U";
     public static final String CMD_MAIN_TABLE_DOWN = "SM3D";
-    public static final String CMD_LED_ON = getCmdChangeLed(0, 0, 0, 100, 100);
+    public static final String CMD_LED_ON = getCmdChangeLed(0, 0, 0, 150, 150);
     public static final String CMD_LED_OFF = getCmdChangeLed(0, 0, 0, 0, 0);
-    public static final String CMD_LED_STUDY_MODE = getCmdChangeLed(255, 255, 204, 100, 100);
-    public static final String CMD_LED_ATTENTION_MODE = getCmdChangeLed(79, 129, 189, 100, 100);
-    public static final String CMD_LED_RELAX_MODE = getCmdChangeLed(142, 180, 227, 100, 100);
-    public static final String CMD_LED_SLEEP_MODE = getCmdChangeLed(1, 176, 80, 100, 100);
-    public static final String CMD_LED_HAPPY_MODE = getCmdChangeLed(255, 255, 2, 100, 100);
-    public static final String CMD_LED_DEPRESSION_MODE = getCmdChangeLed(255, 103, 255, 100, 100);
+    public static final String CMD_F_IR_LED_ON = "SM5O";
+    public static final String CMD_F_IR_LED_OFF = "SM5F";
+
+    public static final String CMD_LED_STUDY_MODE = getCmdChangeLed(255, 255, 204, 150, 150);
+    public static final String CMD_LED_ATTENTION_MODE = getCmdChangeLed(79, 129, 189, 0, 0);
+    public static final String CMD_LED_RELAX_MODE = getCmdChangeLed(142, 180, 227, 0, 0);
+    public static final String CMD_LED_SLEEP_MODE = getCmdChangeLed(1, 176, 80, 0, 0);
+    public static final String CMD_LED_HAPPY_MODE = getCmdChangeLed(255, 255, 2, 0, 0);
+    public static final String CMD_LED_DEPRESSION_MODE = getCmdChangeLed(255, 103, 255, 0, 0);
 
 
     private static final String CMD_READ_STATUS = "RDATA";
@@ -440,7 +443,6 @@ public class ConnectManager {
         }
         return null;
     }
-
 
     private static String int2String(int num) {
         String result = "";

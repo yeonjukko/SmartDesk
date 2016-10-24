@@ -32,15 +32,15 @@ import neurosky.com.smartdesk.service.BluetoothService;
 
 public class BrainWaveActivity extends SmartDeskActivity implements View.OnClickListener, NskAlgoSdkListener {
     private static String CURRENT_MODE = "원하는 모드를 선택하세요.";
-    private static final String THERAPY_STUDY_MODE = "THERAPY MODE (STUDY)";
-    private static final String THERAPY_ATTENTION_MODE = "THERAPY MODE (ATTENTION)";
-    private static final String THERAPY_SLEEP_MODE = "THERAPY MODE (SLEEP)";
-    private static final String THERAPY_RELAX_MODE = "THERAPY MODE (RELAX)";
-    private static final String THERAPY_HAPPY_MODE = "THERAPY MODE (HAPPY)";
-    private static final String THERAPY_DEPRESSION_MODE = "THERAPY MODE (DEPRESSION)";
-    private static final String MUSIC_MODE = "CLASSIC MUSIC MODE";
-    private static final String ATTENTION_MODE = "ATTENTION MODE";
-    private static final String MEDITATION_MODE = "MEDITATION MODE";
+    private static final String THERAPY_STUDY_MODE = "Therapy Mode (Study)";
+    private static final String THERAPY_ATTENTION_MODE = "Therapy Mode (Attention)";
+    private static final String THERAPY_SLEEP_MODE = "Therapy Mode (Sleep)";
+    private static final String THERAPY_RELAX_MODE = "Therapy Mode (Relax)";
+    private static final String THERAPY_HAPPY_MODE = "Therapy Mode (Happy)";
+    private static final String THERAPY_DEPRESSION_MODE = "Therapy Mode (Depression)";
+    private static final String MUSIC_MODE = "Classic Music Mode";
+    private static final String ATTENTION_MODE = "Attention Mode";
+    private static final String MEDITATION_MODE = "Meditation Mode";
 
 
     private NskAlgoSdkManager nskAlgoSdkManager;
@@ -87,11 +87,10 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        setContentView(R.layout.activity_brainwave);
-
+        setContentView(R.layout.activity_brainwave);
 
         //모바일 작업 시 주석 제거
-        setContentView(R.layout.activity_brainwave2);
+        //setContentView(R.layout.activity_brainwave2);
 
         setLayout();
         setNskAlgoSdk();
@@ -246,6 +245,7 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
                     mediaPlayer.start();
                 }
                 break;
+
             case R.id.layout_attention:
                 CURRENT_MODE = THERAPY_ATTENTION_MODE;
                 textViewCurrentMode.setText(THERAPY_ATTENTION_MODE);
@@ -331,17 +331,17 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
             public void run() {
                 switch (level) {
                     case NskAlgoSdkListener.CONNECTION_QUALITY_GOOD:
-                        sqText.setText("GOOD");
+                        sqText.setText("Good");
                         linearLayoutLeftTime.setVisibility(View.GONE);
                         notDetectedCount = 10;
                         break;
                     case NskAlgoSdkListener.CONNECTION_QUALITY_MEDIUM:
-                        sqText.setText("MEDIUM");
+                        sqText.setText("Medium");
                         linearLayoutLeftTime.setVisibility(View.GONE);
                         notDetectedCount = 10;
                         break;
                     case NskAlgoSdkListener.CONNECTION_QUALITY_NOT_DETECTED:
-                        sqText.setText("NOT DETECTED");
+                        sqText.setText("Not Detected");
                         notDetectedCount--;
 
                         if (notDetectedCount == 0) {
@@ -355,12 +355,12 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
                             linearLayoutLeftTime.setVisibility(View.GONE);
                         }
 
-                        textViewLeftTime.setText(notDetectedCount + "초 후에 다시 검색합니다");
+                        textViewLeftTime.setText("Research after "+notDetectedCount+"s");
 
 
                         break;
                     case NskAlgoSdkListener.CONNECTION_QUALITY_POOR:
-                        sqText.setText("POOR");
+                        sqText.setText("Poor");
                         linearLayoutLeftTime.setVisibility(View.GONE);
                         notDetectedCount = 10;
                         break;
@@ -423,7 +423,7 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
                     circleProgressViewMeditation.setBarColor(Color.parseColor(getMeditationColor(value)));
                     circleProgressViewMeditation.setTextColor(Color.parseColor(getMeditationColor(value)));
                     //블루투스 기기로 데이터 전송
-                    if (CURRENT_MODE.equals(MEDITATION_MODE)) {
+                    if (CURRENT_MODE.equals(MEDITATION_MODE)||CURRENT_MODE.equals(MUSIC_MODE)) {
                         new SendThread(tmpMeditationValue, value).start();
                     }
                     tmpMeditationValue = value;
@@ -463,7 +463,7 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
 
             if (CURRENT_MODE.equals(ATTENTION_MODE)) {
                 bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed2Attention(firstValue));
-            } else if (CURRENT_MODE.equals(MEDITATION_MODE)) {
+            } else if (CURRENT_MODE.equals(MEDITATION_MODE)||CURRENT_MODE.equals(MUSIC_MODE)) {
                 bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed2Meditation(firstValue));
             }
             msg.setData(bundle);
@@ -483,7 +483,7 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
             bundle = new Bundle();
             if (CURRENT_MODE.equals(ATTENTION_MODE)) {
                 bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed2Attention(secondValue));
-            } else if (CURRENT_MODE.equals(MEDITATION_MODE)) {
+            } else if (CURRENT_MODE.equals(MEDITATION_MODE)||CURRENT_MODE.equals(MUSIC_MODE)) {
                 bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed2Meditation(secondValue));
             }
             msg.setData(bundle);
@@ -503,7 +503,7 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
 
             if (CURRENT_MODE.equals(ATTENTION_MODE)) {
                 bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed2Attention(endValue));
-            } else if (CURRENT_MODE.equals(MEDITATION_MODE)) {
+            } else if (CURRENT_MODE.equals(MEDITATION_MODE)||CURRENT_MODE.equals(MUSIC_MODE)) {
                 bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.getCmdChangeLed2Meditation(endValue));
             }
             msg.setData(bundle);

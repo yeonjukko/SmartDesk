@@ -45,8 +45,8 @@ public class SmartDeskMainActivity extends SmartDeskActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //휴대폰 환경으로 테스트시 아래 주석 해제
-
         //setContentView(R.layout.activity_main2);
+
         buttonConnect = (CircularProgressButton) findViewById(R.id.bt_connect);
         buttonSetting = (ImageView) findViewById(R.id.bt_setting);
 
@@ -63,6 +63,9 @@ public class SmartDeskMainActivity extends SmartDeskActivity implements View.OnC
         findViewById(R.id.bt_8).setOnTouchListener(touchListener);
         findViewById(R.id.bt_9).setOnTouchListener(touchListener);
         findViewById(R.id.bt_10).setOnTouchListener(touchListener);
+        findViewById(R.id.bt_11).setOnTouchListener(touchListener);
+        findViewById(R.id.bt_12).setOnTouchListener(touchListener);
+
 
         regReceiver();
         bindService(new Intent(getContext(), BluetoothService.class), connection, Context.BIND_AUTO_CREATE);
@@ -158,6 +161,12 @@ public class SmartDeskMainActivity extends SmartDeskActivity implements View.OnC
                     break;
                 case R.id.bt_10:
                     bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_LED_ON);
+                    break;
+                case R.id.bt_11:
+                    bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_F_IR_LED_OFF);
+                    break;
+                case R.id.bt_12:
+                    bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_F_IR_LED_ON);
                     break;
             }
             msg.setData(bundle);

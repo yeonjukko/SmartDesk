@@ -22,8 +22,8 @@
 
             <ImageView
                 android:id="@+id/bt_setting"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="right"
                 android:layout_marginRight="80dp"
                 android:src="@drawable/ic_setting" />
@@ -35,7 +35,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="10dp"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             app:cpb_cornerRadius="48dp"
@@ -54,18 +53,19 @@
                 android:layout_width="270dp"
                 android:layout_height="wrap_content"
                 android:text="Desk Height"
-                android:textSize="30dp" />
+                android:textSize="20dp"
+                android:id="@+id/textView5" />
 
             <ImageView
                 android:id="@+id/bt_2"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:src="@drawable/ic_minus"
                 android:text="CMD_DESK_DOWN" />
 
             <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="50dp"
                 android:src="@drawable/ic_table"
@@ -73,8 +73,8 @@
 
             <ImageView
                 android:id="@+id/bt_1"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:src="@drawable/ic_plus"
                 android:text="CMD_DESK_UP" />
 
@@ -92,26 +92,26 @@
                 android:layout_width="270dp"
                 android:layout_height="wrap_content"
                 android:text="Smart LED Height"
-                android:textSize="30dp" />
+                android:textSize="20dp" />
 
             <ImageView
                 android:id="@+id/bt_4"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:src="@drawable/ic_minus"
                 android:text="CMD_LED_DOWN" />
 
             <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="50dp"
                 android:src="@drawable/ic_light" />
 
             <ImageView
                 android:id="@+id/bt_3"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:src="@drawable/ic_plus"
                 android:text="CMD_DESK_UP" />
         </LinearLayout>
@@ -125,26 +125,26 @@
             <TextView
                 android:layout_width="270dp"
                 android:layout_height="wrap_content"
-                android:text="Center Table Height"
-                android:textSize="30dp" />
+                android:text="Desk Tilt"
+                android:textSize="20dp" />
 
             <ImageView
                 android:id="@+id/bt_6"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:src="@drawable/ic_minus" />
 
             <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="50dp"
                 android:src="@drawable/ic_table" />
 
             <ImageView
                 android:id="@+id/bt_5"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:src="@drawable/ic_plus" />
         </LinearLayout>
 
@@ -160,7 +160,7 @@
                 android:layout_width="270dp"
                 android:layout_height="wrap_content"
                 android:text="Tablet Slope"
-                android:textSize="30dp" />
+                android:textSize="20dp" />
 
             <ImageView
                 android:id="@+id/bt_8"
@@ -169,8 +169,8 @@
                 android:src="@drawable/ic_minus" />
 
             <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="50dp"
                 android:src="@drawable/ic_laptop" />
@@ -193,28 +193,63 @@
                 android:layout_width="270dp"
                 android:layout_height="wrap_content"
                 android:text="Tablet Slope"
-                android:textSize="30dp" />
+                android:textSize="20dp" />
 
             <Button
                 android:id="@+id/bt_9"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:background="@null"
                 android:text="OFF" />
 
             <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="50dp"
                 android:src="@drawable/ic_laptop" />
 
             <Button
                 android:id="@+id/bt_10"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:background="@null"
                 android:src="@drawable/ic_plus"
+                android:text="ON" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="270dp"
+                android:layout_height="wrap_content"
+                android:text="F-IR LED ON/OFF"
+                android:textSize="20dp" />
+
+            <Button
+                android:id="@+id/bt_11"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@null"
+                android:text="OFF" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:src="@drawable/ic_light" />
+
+            <Button
+                android:id="@+id/bt_12"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@null"
                 android:text="ON" />
         </LinearLayout>
 
