@@ -96,8 +96,7 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
 
         setLayout();
         setNskAlgoSdk();
-        if(startService(new Intent(getContext(),BluetoothService.class))!=null)
-            bindService(new Intent(getContext(), BluetoothService.class), connection, Context.BIND_AUTO_CREATE);
+        bindService(new Intent(getContext(), BluetoothService.class), connection, Context.BIND_AUTO_CREATE);
     }
 
     private void setNskAlgoSdk() {
@@ -245,40 +244,73 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
         switch (v.getId()) {
 
             case R.id.layout_attention:
+                if(mediaPlayer.isPlaying()){
+                    mediaPlayer.pause();
+                    musicPlayerView.onToggled();
+                }
                 CURRENT_MODE = THERAPY_ATTENTION_MODE;
                 textViewCurrentMode.setText(THERAPY_ATTENTION_MODE);
                 bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_LED_ATTENTION_MODE);
                 break;
             case R.id.layout_study:
+                if(mediaPlayer.isPlaying()){
+                    mediaPlayer.pause();
+                    musicPlayerView.onToggled();
+
+                }
                 textViewCurrentMode.setText(THERAPY_STUDY_MODE);
                 CURRENT_MODE = THERAPY_STUDY_MODE;
                 bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_LED_STUDY_MODE);
                 break;
             case R.id.layout_relax:
+                if(mediaPlayer.isPlaying()){
+                    musicPlayerView.onToggled();
+                    mediaPlayer.pause();
+                }
                 CURRENT_MODE = THERAPY_RELAX_MODE;
                 textViewCurrentMode.setText(THERAPY_RELAX_MODE);
                 bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_LED_RELAX_MODE);
                 break;
             case R.id.layout_happy:
+                if(mediaPlayer.isPlaying()){
+                    musicPlayerView.onToggled();
+                    mediaPlayer.pause();
+                }
                 CURRENT_MODE = THERAPY_HAPPY_MODE;
                 textViewCurrentMode.setText(THERAPY_HAPPY_MODE);
                 bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_LED_HAPPY_MODE);
                 break;
             case R.id.layout_depression:
+                if(mediaPlayer.isPlaying()){
+                    musicPlayerView.onToggled();
+                    mediaPlayer.pause();
+                }
                 CURRENT_MODE = THERAPY_DEPRESSION_MODE;
                 textViewCurrentMode.setText(THERAPY_DEPRESSION_MODE);
                 bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_LED_DEPRESSION_MODE);
                 break;
             case R.id.layout_sleep:
+                if(mediaPlayer.isPlaying()){
+                    musicPlayerView.onToggled();
+                    mediaPlayer.pause();
+                }
                 CURRENT_MODE = THERAPY_SLEEP_MODE;
                 textViewCurrentMode.setText(THERAPY_SLEEP_MODE);
                 bundle.putString(BluetoothService.FLAG_DATA, ConnectManager.CMD_LED_SLEEP_MODE);
                 break;
             case R.id.viewAttentionMode:
+                if(mediaPlayer.isPlaying()){
+                    musicPlayerView.onToggled();
+                    mediaPlayer.pause();
+                }
                 CURRENT_MODE = ATTENTION_MODE;
                 textViewCurrentMode.setText(ATTENTION_MODE);
                 return;
             case R.id.viewMediationMode:
+                if(mediaPlayer.isPlaying()){
+                    musicPlayerView.onToggled();
+                    mediaPlayer.pause();
+                }
                 CURRENT_MODE = MEDITATION_MODE;
                 textViewCurrentMode.setText(MEDITATION_MODE);
                 return;
