@@ -77,7 +77,6 @@ public class SmartDeskMainActivity extends SmartDeskActivity implements View.OnC
         super.onDestroy();
         unregReceiver();
 
-        stopService(new Intent(getContext(),BluetoothService.class));
         unbindService(connection);
     }
 

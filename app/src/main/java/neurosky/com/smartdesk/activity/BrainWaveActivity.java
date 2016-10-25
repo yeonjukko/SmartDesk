@@ -246,7 +246,7 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
             case R.id.layout_attention:
                 if(mediaPlayer.isPlaying()){
                     mediaPlayer.pause();
-                    musicPlayerView.onToggled();
+                    musicPlayerView.stop();
                 }
                 CURRENT_MODE = THERAPY_ATTENTION_MODE;
                 textViewCurrentMode.setText(THERAPY_ATTENTION_MODE);
@@ -255,7 +255,7 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
             case R.id.layout_study:
                 if(mediaPlayer.isPlaying()){
                     mediaPlayer.pause();
-                    musicPlayerView.onToggled();
+                    musicPlayerView.stop();
 
                 }
                 textViewCurrentMode.setText(THERAPY_STUDY_MODE);
@@ -264,7 +264,7 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
                 break;
             case R.id.layout_relax:
                 if(mediaPlayer.isPlaying()){
-                    musicPlayerView.onToggled();
+                    musicPlayerView.stop();
                     mediaPlayer.pause();
                 }
                 CURRENT_MODE = THERAPY_RELAX_MODE;
@@ -273,7 +273,7 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
                 break;
             case R.id.layout_happy:
                 if(mediaPlayer.isPlaying()){
-                    musicPlayerView.onToggled();
+                    musicPlayerView.stop();
                     mediaPlayer.pause();
                 }
                 CURRENT_MODE = THERAPY_HAPPY_MODE;
@@ -282,7 +282,7 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
                 break;
             case R.id.layout_depression:
                 if(mediaPlayer.isPlaying()){
-                    musicPlayerView.onToggled();
+                    musicPlayerView.stop();
                     mediaPlayer.pause();
                 }
                 CURRENT_MODE = THERAPY_DEPRESSION_MODE;
@@ -291,7 +291,7 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
                 break;
             case R.id.layout_sleep:
                 if(mediaPlayer.isPlaying()){
-                    musicPlayerView.onToggled();
+                    musicPlayerView.stop();
                     mediaPlayer.pause();
                 }
                 CURRENT_MODE = THERAPY_SLEEP_MODE;
@@ -300,7 +300,7 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
                 break;
             case R.id.viewAttentionMode:
                 if(mediaPlayer.isPlaying()){
-                    musicPlayerView.onToggled();
+                    musicPlayerView.stop();
                     mediaPlayer.pause();
                 }
                 CURRENT_MODE = ATTENTION_MODE;
@@ -308,7 +308,7 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
                 return;
             case R.id.viewMediationMode:
                 if(mediaPlayer.isPlaying()){
-                    musicPlayerView.onToggled();
+                    musicPlayerView.stop();
                     mediaPlayer.pause();
                 }
                 CURRENT_MODE = MEDITATION_MODE;
