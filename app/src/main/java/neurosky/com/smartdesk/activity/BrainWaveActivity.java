@@ -96,7 +96,8 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
 
         setLayout();
         setNskAlgoSdk();
-        bindService(new Intent(getContext(), BluetoothService.class), connection, Context.BIND_AUTO_CREATE);
+        if(startService(new Intent(getContext(),BluetoothService.class))!=null)
+            bindService(new Intent(getContext(), BluetoothService.class), connection, Context.BIND_AUTO_CREATE);
     }
 
     private void setNskAlgoSdk() {
@@ -231,6 +232,12 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbindService(connection);
+    }
+
+    @Override
     public void onClick(View v) {
         Message msg = Message.obtain(null, BluetoothService.SEND_DATA, 0, 0);
         Bundle bundle = new Bundle();
@@ -281,19 +288,14 @@ public class BrainWaveActivity extends SmartDeskActivity implements View.OnClick
                 if (musicPlayerView.isRotating()) {
                     musicPlayerView.stop();
                     mediaPlayer.pause();
-
                 } else {
                     if (musicPlayerView.getProgress() == 0) {
                         mediaPlayer.seekTo(0);
                         musicPlayerView.setProgress(0);
                     }
-
                     musicPlayerView.start();
                     mediaPlayer.start();
-
-
                 }
-
                 return;
 
         }

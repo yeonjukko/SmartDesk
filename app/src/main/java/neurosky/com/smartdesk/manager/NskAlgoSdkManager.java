@@ -40,7 +40,10 @@ public class NskAlgoSdkManager {
 
     public void finish(){
         nskAlgoSdk.NskAlgoStop();
-        tgStreamReader.close();
+        if (tgStreamReader != null) {
+            tgStreamReader.stop();
+            tgStreamReader.close();
+        }
     }
 
 
