@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Message;
@@ -18,9 +19,9 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.dd.CircularProgressButton;
-import com.larswerkman.holocolorpicker.ColorPicker;
-import com.larswerkman.holocolorpicker.OpacityBar;
-import com.larswerkman.holocolorpicker.OpacityBar.OnOpacityChangedListener;
+import neurosky.com.smartdesk.holocolorpicker.ColorPicker;
+import neurosky.com.smartdesk.holocolorpicker.OpacityBar;
+import neurosky.com.smartdesk.holocolorpicker.OpacityBar.OnOpacityChangedListener;
 
 import neurosky.com.smartdesk.R;
 import neurosky.com.smartdesk.manager.ConnectManager;
@@ -48,6 +49,8 @@ public class SmartLedActivity extends SmartDeskActivity implements View.OnClickL
     };
     ColorPicker picker;
     OpacityBar opacityBarWarm, opacityBarCool;
+    Paint opacityBarCoolPaint;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,7 @@ public class SmartLedActivity extends SmartDeskActivity implements View.OnClickL
         regReceiver();
         bindService(new Intent(getContext(), BluetoothService.class), connection, Context.BIND_AUTO_CREATE);
         setLayout();
+
     }
 
     @Override
@@ -231,6 +235,7 @@ public class SmartLedActivity extends SmartDeskActivity implements View.OnClickL
         }
         sendTime = System.currentTimeMillis();
         sendColor();
+
     }
 
 

@@ -201,7 +201,7 @@
                 android:text="Picker Mode"
                 android:textSize="20dp" />
 
-            <com.larswerkman.holocolorpicker.ColorPicker
+            <neurosky.com.smartdesk.holocolorpicker.ColorPicker
                 android:id="@+id/picker"
                 android:layout_width="200dp"
                 android:layout_height="100dp"
@@ -209,7 +209,7 @@
                 app:color_wheel_thickness="5dp" />
 
 
-            <com.larswerkman.holocolorpicker.OpacityBar
+            <neurosky.com.smartdesk.holocolorpicker.OpacityBar
                 android:id="@+id/opacitybarWarm"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
@@ -218,7 +218,7 @@
                 app:bar_pointer_radius="10dp"
                 app:bar_thickness="10dp" />
 
-            <com.larswerkman.holocolorpicker.OpacityBar
+            <neurosky.com.smartdesk.holocolorpicker.OpacityBar
                 android:id="@+id/opacitybarCool"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"

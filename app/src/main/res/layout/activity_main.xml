@@ -24,8 +24,8 @@
             android:textStyle="bold" />
 
         <ImageView
-            android:layout_width="700dp"
-            android:layout_height="700dp"
+            android:layout_width="600dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="15dp"
             android:src="@drawable/ic_main" />

@@ -209,34 +209,66 @@
                 android:text="Picker Mode"
                 android:textSize="50dp" />
 
-            <com.larswerkman.holocolorpicker.ColorPicker
+            <neurosky.com.smartdesk.holocolorpicker.ColorPicker
                 android:id="@+id/picker"
-                android:layout_width="500dp"
-                android:layout_height="500dp"
+                android:layout_width="400dp"
+                android:layout_height="400dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="60dp"
                 app:color_wheel_thickness="25dp" />
 
 
-            <com.larswerkman.holocolorpicker.OpacityBar
-                android:id="@+id/opacitybarWarm"
-                android:layout_width="500dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                app:bar_pointer_halo_radius="30dp"
-                app:bar_pointer_radius="10dp"
-                app:bar_thickness="25dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-            <com.larswerkman.holocolorpicker.OpacityBar
-                android:id="@+id/opacitybarCool"
-                android:layout_width="500dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                app:bar_pointer_halo_radius="30dp"
-                app:bar_pointer_radius="10dp"
-                app:bar_thickness="25dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="30dp"
+                    android:text="Warm White LED"
+                    android:textSize="20dp"
+                    android:id="@+id/textView6" />
+
+                <neurosky.com.smartdesk.holocolorpicker.OpacityBar
+                    android:id="@+id/opacitybarWarm"
+                    android:layout_width="500dp"
+                    android:layout_height="40dp"
+
+                    app:bar_pointer_halo_radius="30dp"
+                    app:bar_pointer_radius="10dp"
+                    app:bar_thickness="25dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="30dp"
+                    android:text=" Cool White LED " />
+
+                <neurosky.com.smartdesk.holocolorpicker.OpacityBar
+                    android:id="@+id/opacitybarCool"
+                    android:layout_width="500dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    app:bar_pointer_halo_radius="30dp"
+                    app:bar_pointer_radius="10dp"
+                    app:bar_thickness="25dp" />
+            </LinearLayout>
+
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -274,6 +306,7 @@
                     android:text="ON"
                     android:textSize="35dp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -311,6 +344,7 @@
                     android:text="ON"
                     android:textSize="35dp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

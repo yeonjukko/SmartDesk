@@ -37,8 +37,8 @@ public class ConnectManager {
     public static final String CMD_MAIN_TABLE_DOWN = "SM3D";
     public static final String CMD_LED_ON = getCmdChangeLed(0, 0, 0, 150, 150);
     public static final String CMD_LED_OFF = getCmdChangeLed(0, 0, 0, 0, 0);
-    public static final String CMD_F_IR_LED_ON = "SM5O";
-    public static final String CMD_F_IR_LED_OFF = "SM5F";
+    public static final String CMD_F_IR_LED_ON = "L200";
+    public static final String CMD_F_IR_LED_OFF = "L000";
 
     public static final String CMD_LED_STUDY_MODE = getCmdChangeLed(255, 255, 204, 150, 150);
     public static final String CMD_LED_ATTENTION_MODE = getCmdChangeLed(79, 129, 189, 0, 0);
